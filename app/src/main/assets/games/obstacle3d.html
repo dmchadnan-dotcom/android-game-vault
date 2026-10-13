@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"><meta name="theme-color" content="#120c2a">
+<title>Dash Dash! 3D — Skybound Sprint</title>
+<style>
+:root{--ink:#fffaff;--muted:#cbc6e9;--dark:#160d32;--pink:#fa55ae;--lime:#a1ff67;--cyan:#6eeeff;--gold:#ffda6a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink);background:#61cbed;touch-action:none;user-select:none}button,input{font:inherit}button{cursor:pointer}button:focus-visible{outline:3px solid white;outline-offset:2px}
+#gl{position:fixed;width:100%;height:100%;inset:0;display:block;background:linear-gradient(#70c1fc,#c8f4ff 65%,#faebd0)}
+#skyGlow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 68% 19%,rgba(255,255,205,.21),transparent 40%)}
+#vignette{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 48%,rgba(8,18,66,.25))}
+.hidden{display:none!important} .overlay{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;padding:16px;background:linear-gradient(110deg,#101431b8,#150b27bf);backdrop-filter:blur(8px);overflow-y:auto}
+.panel{width:min(940px,100%);max-height:calc(100dvh - 25px);overflow:auto;border:1px solid #ffffff3b;border-radius:25px;background:linear-gradient(150deg,#241744ee,#130e30f5);box-shadow:0 24px 90px #100a2890;padding:clamp(18px,3.2vw,34px)}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:16px}.tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#c7fffc;background:#3bd9cf24;border:1px solid #49e3db62;padding:7px 12px;border-radius:100px}
+h1{font-size:clamp(38px,6.5vw,72px);line-height:.96;margin:18px 0 8px;letter-spacing:-3px;text-shadow:0 3px #512570}h1 em{font-style:normal;color:var(--gold);text-shadow:0 4px #7b3c13}.sub{color:var(--muted);max-width:670px;line-height:1.5;margin:9px 0 18px;font-size:14px}
+.logoMark{display:flex;align-items:center;gap:9px;background:#ffffff13;border:1px solid #ffffff25;padding:12px;border-radius:17px;font-size:24px}
+.picks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:12px 0 16px}.pick{border:2px solid #ffffff27;border-radius:16px;background:#ffffff0b;padding:12px;cursor:pointer;transition:.15s;min-width:0}.pick.active{border-color:#ffe482;background:#fbd95f22;box-shadow:0 0 20px #ffe48216}.pick h3{margin:8px 0 3px;font-size:14px}.pick p{margin:0;color:#d9d1eb;font-size:11px;line-height:1.4}.pick .scene{height:52px;border-radius:11px;position:relative;overflow:hidden;background:linear-gradient(#86cfff 45%,#8c7fff 45%)}.pick .scene::before{content:"";position:absolute;width:120%;height:14px;background:#ffffff70;transform:rotate(-17deg);top:30px;left:-10%}.pick[data-course="1"] .scene{background:linear-gradient(#122e5e 45%,#f466aa 45%)}.pick[data-course="2"] .scene{background:linear-gradient(#7ed4f2 45%,#59b46e 45%)}
+.controlsMenu{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;flex-wrap:wrap;margin:10px 0 18px}.fields{display:flex;align-items:end;gap:14px;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:6px;color:#d9d3ef;font-size:12px;font-weight:800}.field input,.field select{background:#120d2e;color:white;border:1px solid #ffffff4b;border-radius:11px;padding:11px 12px;min-width:125px;outline:none}.skins{display:flex;gap:7px}.skin{width:34px;height:34px;border-radius:50%;border:3px solid #ffffff45;box-shadow:inset 0 -5px #0002}.skin.active{border-color:#fff;box-shadow:0 0 0 2px #ffdc77}
+.bigBtn{background:linear-gradient(120deg,#ffda6a,#ff8f77);border:0;border-radius:14px;color:#3c1941;font-weight:1000;letter-spacing:.5px;padding:15px 26px;box-shadow:0 6px #bf6267;font-size:15px}.bigBtn:active{transform:translateY(3px);box-shadow:0 3px #bf6267}.secondary{background:#ffffff16;border:1px solid #ffffff45;box-shadow:none;color:white}.menuFoot{border-top:1px solid #ffffff24;padding-top:12px;color:#bcb9d9;font-size:12px;display:flex;flex-wrap:wrap;gap:10px 22px}
+#hud{position:fixed;inset:0;z-index:3;pointer-events:none}#topbar{position:absolute;top:max(12px,env(safe-area-inset-top));left:max(13px,env(safe-area-inset-left));right:max(13px,env(safe-area-inset-right));display:flex;align-items:start;justify-content:space-between;gap:12px}.hudgroup{display:flex;gap:8px;align-items:start;flex-wrap:wrap}.pill{border:1px solid #ffffff60;background:#1b1548bb;backdrop-filter:blur(9px);box-shadow:0 5px 20px #13113a30;border-radius:14px;padding:8px 12px;min-width:70px}.pill strong{display:block;font-size:21px;line-height:1.13;font-weight:1000;text-shadow:0 2px #1118}.pill small{font-size:10px;font-weight:900;letter-spacing:1.3px;color:#d5d9ed}.pauseBtn{pointer-events:auto;background:#19143cbb;color:white;border:1px solid #ffffff80;border-radius:13px;font-size:19px;width:47px;height:47px}
+#progressWrap{position:absolute;top:87px;left:50%;transform:translateX(-50%);width:min(360px,52vw);height:10px;border-radius:100px;background:#18114e90;border:1px solid #ffffff99}#progressFill{height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,#f9a8e2,#fff17f);box-shadow:0 0 14px #fff5c3a0}#checkpoint{position:absolute;left:50%;transform:translateX(-50%);top:104px;font-weight:900;font-size:10px;letter-spacing:1px;text-shadow:0 2px #17113a}
+#leftStats{position:absolute;top:50%;transform:translateY(-50%);left:14px;display:flex;flex-direction:column;gap:8px}.statLine{font-size:11px;background:#1611379c;padding:7px 10px;border-radius:10px;max-width:120px;border:1px solid #ffffff30}.statLine b{display:block;font-size:15px}#leader{position:absolute;top:148px;right:14px;width:145px;border-radius:14px;padding:10px 11px;background:#1d1848a8;border:1px solid #ffffff50;backdrop-filter:blur(6px);font-size:11px}.boardTitle{font-size:10px;letter-spacing:1.7px;color:#c1fdff;margin-bottom:5px;font-weight:900}.playerRow{display:flex;align-items:center;justify-content:space-between;gap:9px;margin:5px 0;color:#ded9fb}.playerRow.me{color:#ffe797;font-weight:900}.tinyDot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
+#tip{position:absolute;bottom:115px;left:50%;transform:translateX(-50%);border-radius:15px;background:#1d164ec0;padding:9px 16px;font-size:13px;font-weight:850;text-align:center;max-width:80vw;transition:opacity .3s;text-shadow:0 2px #131038;white-space:normal}
+#mobileControls{position:fixed;z-index:4;inset:0;pointer-events:none;display:none}#joyOuter{position:absolute;bottom:max(24px,env(safe-area-inset-bottom));left:max(23px,env(safe-area-inset-left));width:116px;height:116px;border-radius:50%;background:#1b195868;border:2px solid #ffffff85;box-shadow:0 8px 20px #10133d50;pointer-events:auto;touch-action:none}#joyOuter::after{content:"MOVE";position:absolute;bottom:-17px;left:0;right:0;text-align:center;font-size:10px;font-weight:900;letter-spacing:1px}#joyKnob{position:absolute;left:31px;top:31px;width:50px;height:50px;border-radius:50%;background:linear-gradient(130deg,#e8fffa,#76dbf0);box-shadow:0 3px 10px #1117}#mobileButtons{position:absolute;bottom:max(24px,env(safe-area-inset-bottom));right:max(17px,env(safe-area-inset-right));display:flex;align-items:end;gap:10px}#mobileButtons button{pointer-events:auto;border-radius:50%;color:#211b50;font-weight:1000;box-shadow:0 6px #29215c75;border:2px solid #ffffff7e;touch-action:none}#jumpBtn{width:86px;height:86px;background:linear-gradient(140deg,#ffe17b,#ffb773)}#dashBtn{width:72px;height:72px;background:linear-gradient(140deg,#9efff0,#49cdfc)}#camBtn{position:absolute;right:13px;bottom:153px;pointer-events:auto;border:1px solid #fff8;background:#17194c99;color:white;border-radius:12px;font-size:11px;font-weight:900;padding:9px}
+.toast{animation:pop .32s ease}@keyframes pop{from{opacity:0;transform:translate(-50%,9px)}to{opacity:1;transform:translate(-50%,0)}}
+#endPanel{max-width:570px;text-align:center}#endPanel h2{font-size:clamp(32px,7vw,54px);margin:12px 0 4px;line-height:1}.resultNum{font-weight:1000;color:#ffe47e;font-size:76px;line-height:1;text-shadow:0 5px #643a67}#resultsList{margin:17px auto;text-align:left;max-width:340px}.resultRow{display:flex;justify-content:space-between;background:#ffffff12;border:1px solid #ffffff12;margin:5px 0;padding:9px 12px;border-radius:9px;font-size:13px}.resultRow.me{border-color:#ffe98a;background:#ffdc6c22}.rowButtons{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}#pausePanel{max-width:470px;text-align:center}#pausePanel h2{font-size:40px;margin:8px 0}#loading{position:fixed;inset:0;background:#17102b;color:white;display:flex;align-items:center;justify-content:center;font-weight:900;z-index:30}
+@media(max-width:650px){.panel{border-radius:18px;padding:17px}.brand{align-items:start}h1{letter-spacing:-2px}.picks{gap:6px}.pick{padding:8px;border-radius:11px}.pick .scene{height:34px}.pick h3{font-size:11px}.pick p{font-size:9px}.controlsMenu{gap:7px}.pill{padding:6px 8px;min-width:58px}.pill strong{font-size:16px}.pill small{font-size:8px;letter-spacing:.5px}#topbar{gap:5px}.hudgroup{gap:4px}#leftStats{top:175px;transform:none;left:9px}.statLine{font-size:9px;padding:5px 7px}.statLine b{font-size:12px}#leader{top:92px;width:117px;font-size:9px;right:9px;padding:8px}#progressWrap{top:70px;width:45vw}#checkpoint{top:84px}#tip{font-size:10px;bottom:154px;max-width:66vw}#mobileControls{display:block}}
+@media(max-height:450px){.panel{padding:12px}.brand{display:none}.panel h1{font-size:36px;margin:5px 0}.sub{font-size:11px;margin:2px 0 8px}.pick .scene{height:24px}.picks{margin:7px 0}.controlsMenu{margin:5px 0}.menuFoot{display:none}#leader{top:90px}#mobileButtons{bottom:12px}#joyOuter{bottom:12px}}
+@media(pointer:coarse){#mobileControls{display:block}}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-label="3D Dash Dash obstacle racing game"></canvas><div id="skyGlow"></div><div id="vignette"></div><div id="loading">BUILDING THE SKY TRACK…</div>
+<section class="overlay" id="menu"><div class="panel"><div class="brand"><div class="tag">✨ OFFLINE 3D ARCADE RACING</div><div class="logoMark">🏃‍♂️ ⚡ 🏆</div></div><h1>DASH DASH! <em>3D</em></h1><div class="sub">SKYBOUND SPRINT — Outrun five rivals across floating race tracks. Dodge giant hammers, weave through gates, leap across holes, and race for the crown.</div>
+<div class="tag">SELECT YOUR WORLD</div><div class="picks" id="coursePicks">
+<div class="pick active" data-course="0"><div class="scene"></div><h3>☁️ Cloud Carnival</h3><p>Sunny skies · Pastel towers · Rotating sweepers</p></div>
+<div class="pick" data-course="1"><div class="scene"></div><h3>🌃 Neon Skyline</h3><p>Cyber city · Laser gates · Boost pads</p></div>
+<div class="pick" data-course="2"><div class="scene"></div><h3>🌴 Jungle Rush</h3><p>Floating jungle · Waterfalls · Giant hammers</p></div>
+</div><div class="controlsMenu"><div class="fields"><label class="field">YOUR NAME<input id="nameField" maxlength="13" value="Dash Hero" autocomplete="off"></label><label class="field">DIFFICULTY<select id="difficulty"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select></label><div class="field">OUTFIT COLOR<div class="skins" id="skins"><button class="skin active" data-skin="0" style="background:#ff77a6" aria-label="Pink"></button><button class="skin" data-skin="1" style="background:#6cdbfa" aria-label="Blue"></button><button class="skin" data-skin="2" style="background:#ffd16d" aria-label="Yellow"></button><button class="skin" data-skin="3" style="background:#bb88ff" aria-label="Purple"></button></div></div></div><button class="bigBtn" id="startBtn">▶ START RACE</button></div><div class="menuFoot"><span>🕹️ WASD / Arrow keys to steer</span><span>⤒ SPACE to jump</span><span>⚡ SHIFT to dash</span><span>📷 C to change camera</span><span>📱 Touch controls included</span></div></div></section>
+<div id="hud" class="hidden"><div id="topbar"><div class="hudgroup"><div class="pill"><small>POSITION</small><strong id="placeText">1 / 6</strong></div><div class="pill"><small>TIME</small><strong id="timeText">00:00</strong></div><div class="pill"><small>COINS</small><strong id="coinText">0 🟡</strong></div></div><div class="hudgroup"><div class="pill"><small>DASH ENERGY</small><strong id="energyText">100%</strong></div><button id="pauseBtn" class="pauseBtn" aria-label="Pause game">Ⅱ</button></div></div><div id="progressWrap"><div id="progressFill"></div></div><div id="checkpoint">START ▸ FINISH</div><div id="leftStats"><div class="statLine">TRACK<b id="courseText">Cloud Carnival</b></div><div class="statLine">SPEED<b id="speedText">0 km/h</b></div><div class="statLine">BEST TIME<b id="bestText">—</b></div></div><div id="leader"><div class="boardTitle">🏆 LIVE STANDINGS</div><div id="leaderRows"></div></div><div id="tip">SPACE to jump · SHIFT to dash</div></div>
+<div id="mobileControls" class="hidden"><div id="joyOuter"><div id="joyKnob"></div></div><div id="mobileButtons"><button id="dashBtn">DASH</button><button id="jumpBtn">JUMP</button></div><button id="camBtn">📷 CAMERA</button></div>
+<section id="pauseOverlay" class="overlay hidden"><div class="panel" id="pausePanel"><div class="tag">⏸ RACE PAUSED</div><h2>Take a breather!</h2><p class="sub" style="margin:auto auto 23px">The track and rival racers are frozen. Resume when you are ready.</p><div class="rowButtons"><button class="bigBtn" id="resumeBtn">▶ RESUME</button><button class="bigBtn secondary" id="quitBtn">⌂ MAIN MENU</button></div></div></section>
+<section id="results" class="overlay hidden"><div class="panel" id="endPanel"><div class="tag" id="resultTag">🏁 FINISH LINE</div><div style="margin-top:15px" class="resultNum" id="resultPlace">1st</div><h2 id="resultTitle">YOU DID IT!</h2><p class="sub" id="resultCaption" style="margin:10px auto">You've crossed the finish line.</p><div id="resultsList"></div><div class="rowButtons"><button class="bigBtn" id="retryBtn">↻ RACE AGAIN</button><button class="bigBtn secondary" id="menuBtn">⌂ CHANGE COURSE</button></div></div></section>
+<script>
+'use strict';
+// Dash Dash! 3D — completely offline, dependency-free WebGL 3D game.
+(function(){
+const $=id=>document.getElementById(id);
+const canvas=$('gl');
+let gl=canvas.getContext('webgl',{alpha:false,antialias:true,powerPreference:'high-performance'}) || canvas.getContext('experimental-webgl',{alpha:false,antialias:true});
+const fallback = !gl;const ctx=fallback?canvas.getContext('2d'):null;let softQueue=[];let softView=null;
+
+const courses=[
+{name:'Cloud Carnival',bg:[.58,.82,.98],fog:[.68,.85,.99],floor:[.62,.52,.95],stripe:[.98,.81,.67],rail:[1,.7,.86],prop:[.87,.68,1],skyColor:'#69caff'},
+{name:'Neon Skyline',bg:[.07,.12,.3],fog:[.16,.17,.45],floor:[.17,.22,.48],stripe:[.24,.73,.87],rail:[1,.32,.7],prop:[.47,.4,.85],skyColor:'#121e50'},
+{name:'Jungle Rush',bg:[.48,.79,.86],fog:[.58,.83,.77],floor:[.43,.68,.47],stripe:[.87,.78,.47],rail:[.97,.69,.38],prop:[.27,.61,.35],skyColor:'#62c9c9'}
+];
+const palette=[[1,.43,.64],[.24,.74,1],[1,.77,.25],[.71,.51,1],[.51,1,.51],[1,.55,.25]];
+const LENGTH=380, WIDTH=19, HALF=WIDTH/2, LANE=5.5;
+const G={phase:'menu',course:0,skin:0,difficulty:'normal',players:[],hazards:[],coins:[],effects:[],time:0,finishTime:0,cameraMode:0,orbit:0,zoom:0,beat:0,checkpoint:0,shownTips:{},courseName:'',best:0};
+let controls={left:false,right:false,up:false,down:false,jump:false,dash:false},analog={x:0,y:0},prevTime=performance.now(),tipTimer=0,coinSound=null;
+const clamp=(a,b,c)=>Math.max(b,Math.min(c,a));
+const mix=(a,b,t)=>a+(b-a)*t;
+const hash=n=>{const s=Math.sin(n*137.27+15.93)*15371.337;return s-Math.floor(s)};
+function vec(x=0,y=0,z=0){return [x,y,z]}
+const norm=a=>{let l=Math.hypot(...a)||1;return a.map(v=>v/l)};
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0);
+const I=()=>new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]);
+function mult(a,b){let m=new Float32Array(16);for(let j=0;j<4;j++)for(let i=0;i<4;i++)m[j*4+i]=a[i]*b[j*4]+a[4+i]*b[j*4+1]+a[8+i]*b[j*4+2]+a[12+i]*b[j*4+3];return m}
+function trans(x,y,z){let m=I();m[12]=x;m[13]=y;m[14]=z;return m}
+function scale(x,y,z){let m=I();m[0]=x;m[5]=y;m[10]=z;return m}
+function ry(a){let m=I(),s=Math.sin(a),c=Math.cos(a);m[0]=c;m[2]=-s;m[8]=s;m[10]=c;return m}
+function rx(a){let m=I(),s=Math.sin(a),c=Math.cos(a);m[5]=c;m[6]=s;m[9]=-s;m[10]=c;return m}
+function rz(a){let m=I(),s=Math.sin(a),c=Math.cos(a);m[0]=c;m[1]=s;m[4]=-s;m[5]=c;return m}
+function model(x,y,z,sx,sy,sz,yaw=0,tilt=0,roll=0){let m=mult(trans(x,y,z),mult(ry(yaw),mult(rz(roll),rx(tilt))));return mult(m,scale(sx,sy,sz))}
+function perspective(fov,aspect,near,far){let f=1/Math.tan(fov/2),m=new Float32Array(16);m[0]=f/aspect;m[5]=f;m[10]=(far+near)/(near-far);m[11]=-1;m[14]=2*far*near/(near-far);return m}
+function lookAt(eye,target){let z=norm([eye[0]-target[0],eye[1]-target[1],eye[2]-target[2]]),x=norm(cross([0,1,0],z)),y=cross(z,x);return new Float32Array([x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-dot(x,eye),-dot(y,eye),-dot(z,eye),1])}
+const VERT=`attribute vec3 aPosition;attribute vec3 aNormal;uniform mat4 uProjection,uView,uModel;uniform vec3 uCamera;varying vec3 vNormal;varying float vDepth;varying vec3 vWorld;void main(){vec4 world=uModel*vec4(aPosition,1.0);vWorld=world.xyz;vNormal=normalize(mat3(uModel)*aNormal);vDepth=distance(uCamera,world.xyz);gl_Position=uProjection*uView*world;}`;
+const FRAG=`precision mediump float;uniform vec3 uColor,uFog;uniform float uAlpha,uEmissive,uFogStart,uFogEnd;varying vec3 vNormal;varying float vDepth;varying vec3 vWorld;void main(){vec3 n=normalize(vNormal);float diffuse=max(dot(n,normalize(vec3(-.43,.86,-.25))),0.0);float light=.51+diffuse*.47+uEmissive;vec3 col=min(vec3(1.0),uColor*light);float fog=smoothstep(uFogStart,uFogEnd,vDepth);gl_FragColor=vec4(mix(col,uFog,fog),uAlpha);}`;
+function shader(type,code){let sh=gl.createShader(type);gl.shaderSource(sh,code);gl.compileShader(sh);if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(sh));return sh}
+let prog=null,loc={};if(!fallback){prog=gl.createProgram();gl.attachShader(prog,shader(gl.VERTEX_SHADER,VERT));gl.attachShader(prog,shader(gl.FRAGMENT_SHADER,FRAG));gl.linkProgram(prog);if(!gl.getProgramParameter(prog,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(prog));gl.useProgram(prog);
+loc={p:gl.getAttribLocation(prog,'aPosition'),n:gl.getAttribLocation(prog,'aNormal'),proj:gl.getUniformLocation(prog,'uProjection'),view:gl.getUniformLocation(prog,'uView'),model:gl.getUniformLocation(prog,'uModel'),color:gl.getUniformLocation(prog,'uColor'),fog:gl.getUniformLocation(prog,'uFog'),alpha:gl.getUniformLocation(prog,'uAlpha'),emit:gl.getUniformLocation(prog,'uEmissive'),camera:gl.getUniformLocation(prog,'uCamera'),fogStart:gl.getUniformLocation(prog,'uFogStart'),fogEnd:gl.getUniformLocation(prog,'uFogEnd')};}
+function createMesh(vertices,indices){if(fallback)return null;let b=gl.createBuffer(),e=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(vertices),gl.STATIC_DRAW);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,e);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(indices),gl.STATIC_DRAW);return {b,e,count:indices.length}}
+function makeCube(){let v=[],ii=[],faces=[[[1,0,0],[[1,-1,-1],[1,-1,1],[1,1,1],[1,1,-1]]],[[-1,0,0],[[-1,-1,1],[-1,-1,-1],[-1,1,-1],[-1,1,1]]],[[0,1,0],[[-1,1,-1],[1,1,-1],[1,1,1],[-1,1,1]]],[[0,-1,0],[[-1,-1,1],[1,-1,1],[1,-1,-1],[-1,-1,-1]]],[[0,0,1],[[1,-1,1],[-1,-1,1],[-1,1,1],[1,1,1]]],[[0,0,-1],[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1]]]];faces.forEach(([n,vs])=>{let q=v.length/6;vs.forEach(p=>v.push(...p,...n));ii.push(q,q+2,q+1,q,q+3,q+2)});return createMesh(v,ii)}
+function makeSphere(segments=12,rings=8){let v=[],ii=[];for(let j=0;j<=rings;j++){let t=j/rings*Math.PI;for(let i=0;i<=segments;i++){let a=i/segments*Math.PI*2,p=[Math.sin(t)*Math.cos(a),Math.cos(t),Math.sin(t)*Math.sin(a)];v.push(...p,...p)}}for(let j=0;j<rings;j++)for(let i=0;i<segments;i++){let q=j*(segments+1)+i;ii.push(q,q+1,q+segments+1,q+1,q+segments+2,q+segments+1)}return createMesh(v,ii)}
+function makeCylinder(segments=12){let v=[],ii=[];for(let i=0;i<=segments;i++){let a=i/segments*Math.PI*2,c=Math.cos(a),s=Math.sin(a);v.push(c,-1,s,c,0,s,c,1,s,c,0,s)}for(let i=0;i<segments;i++){let q=i*2;ii.push(q,q+1,q+2,q+1,q+3,q+2)}let q=v.length/6;v.push(0,1,0,0,1,0);for(let i=0;i<=segments;i++){let a=i/segments*2*Math.PI;v.push(Math.cos(a),1,Math.sin(a),0,1,0)}for(let i=0;i<segments;i++)ii.push(q,q+2+i,q+1+i);q=v.length/6;v.push(0,-1,0,0,-1,0);for(let i=0;i<=segments;i++){let a=i/segments*2*Math.PI;v.push(Math.cos(a),-1,Math.sin(a),0,-1,0)}for(let i=0;i<segments;i++)ii.push(q,q+1+i,q+2+i);return createMesh(v,ii)}
+function makeCone(segments=10){let v=[],ii=[];for(let i=0;i<=segments;i++){let a=i/segments*2*Math.PI,c=Math.cos(a),s=Math.sin(a);v.push(c,-1,s,c,.45,s,0,1,0,c,.45,s)}for(let i=0;i<segments;i++){let q=i*2;ii.push(q,q+2,q+1)}return createMesh(v,ii)}
+let meshes={cube:makeCube(),ball:makeSphere(),tube:makeCylinder(),cone:makeCone()};
+if(!fallback){gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.enable(gl.CULL_FACE);gl.cullFace(gl.BACK);gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);}
+let drawCount=0;
+function draw(mesh,m,color,emissive=0,alpha=1){if(fallback){softQueue.push({mesh,m,color,emissive,alpha});return}let M=meshes[mesh];if(!M)return;gl.uniformMatrix4fv(loc.model,false,m);gl.uniform3fv(loc.color,color);gl.uniform1f(loc.alpha,alpha);gl.uniform1f(loc.emit,emissive);gl.bindBuffer(gl.ARRAY_BUFFER,M.b);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,M.e);gl.enableVertexAttribArray(loc.p);gl.enableVertexAttribArray(loc.n);gl.vertexAttribPointer(loc.p,3,gl.FLOAT,false,24,0);gl.vertexAttribPointer(loc.n,3,gl.FLOAT,false,24,12);gl.drawElements(gl.TRIANGLES,M.count,gl.UNSIGNED_SHORT,0);drawCount++}
+const box=(x,y,z,sx,sy,sz,c,e=0,yaw=0)=>draw('cube',model(x,y,z,sx,sy,sz,yaw),c,e);
+const ball=(x,y,z,sx,sy,sz,c,e=0)=>draw('ball',model(x,y,z,sx,sy,sz),c,e);
+const tube=(x,y,z,sx,sy,sz,c,e=0,yaw=0,roll=0)=>draw('tube',model(x,y,z,sx,sy,sz,yaw,0,roll),c,e);
+function showToast(t,ms=2200){$('tip').textContent=t;$('tip').style.opacity=1;tipTimer=ms/1000;$('tip').classList.remove('toast');void $('tip').offsetWidth;$('tip').classList.add('toast')}
+function rgb(c,k=1){return c.map(v=>clamp(v*k,0,1))}
+function shadow(x,z,r=1,alpha=.22){draw('ball',model(x,-.035,z,r,.018,r*.8),[.07,.06,.14],0,alpha)}
+function buildTrack(idx){G.hazards=[];G.coins=[];G.checkpoint=0;for(let z=25;z<LENGTH-12;z+=16){let n=Math.floor(z/16),lane=(Math.floor(hash(n*10+idx*9)*3)-1);let type=['block','sweep','gate','gap','double','hammer','pad'][((n*3+idx*2)%7)];if(z<35)type='block';let h={z,x:lane*LANE,type,phase:hash(n+7)*6.28,id:n,hit:false};G.hazards.push(h);for(let c=0;c<3;c++){let coinZ=z+6+c*2.7;if(coinZ<LENGTH-10)G.coins.push({x:(((n+c)%3)-1)*LANE,z:coinZ,taken:false})}}
+G.hazards.push({z:LENGTH-4,x:0,type:'finish'});G.courseName=courses[idx].name}
+function makeRacer(i,name,kind){let speed=7.65+(hash(i+12)*1.4),diff=G.difficulty==='hard'?1.16:G.difficulty==='easy'?.88:1;
+return {i,name,kind,x:(i%3-1)*2.6,z:i===0?0:-2-Math.floor(i/3)*2,y:0,vy:0,vx:0,vz:speed,baseSpeed:speed*diff,angle:0,stumble:0,dashTime:0,energy:100,boostFx:0,coins:0,finished:false,finishTime:0,checkpoint:0,hits:new Set(),color:palette[i===0?G.skin:i],running:0,respawnFx:0}}
+function resetGame(){buildTrack(G.course);G.time=0;G.finishTime=0;G.orbit=0;G.zoom=0;G.cameraMode=0;G.beat=0;G.shownTips={};G.players=[makeRacer(0,($('nameField').value||'Dash Hero').trim().slice(0,13)||'Dash Hero','human')];['Bolt Bot','Nova','Bumper','Rocket','Zippy'].forEach((n,i)=>G.players.push(makeRacer(i+1,n,'bot')));G.players.forEach((p,i)=>{p.z=-i*1.25;p.x=((i%3)-1)*3.6});G.players[0].z=0;analog.x=0;analog.y=0;for(const k in controls)controls[k]=false;G.phase='race';$('hud').classList.remove('hidden');$('mobileControls').classList.remove('hidden');$('menu').classList.add('hidden');$('results').classList.add('hidden');$('pauseOverlay').classList.add('hidden');$('courseText').textContent=G.courseName;try{G.best=Number(localStorage.getItem('dash3d_best_'+G.course+'_'+G.difficulty)||0)}catch(e){G.best=0}$('bestText').textContent=G.best?fmt(G.best):'—';$('progressFill').style.width='0%';showToast('🏁 GO! Dodge hazards, jump gaps, and beat the bots!',3400)}
+function fmt(t){let min=Math.floor(t/60),sec=Math.floor(t%60);return String(min).padStart(2,'0')+':'+String(sec).padStart(2,'0')}
+function pointInHole(x,z){return G.hazards.some(h=>h.type==='gap'&&Math.abs(h.z-z)<3.3&&Math.abs(h.x-x)<2.6)}
+function recover(p){p.z=Math.max(p.checkpoint,p.z-8);p.x=(p.i%3-1)*2.7;p.y=0;p.vy=0;p.stumble=1.1;p.respawnFx=1.4;showIfPlayer(p,'💫 Respawned at a safe platform!')}
+function showIfPlayer(p,s){if(p.kind==='human')showToast(s)}
+function jump(p){if(p.y<=.12&&p.vy<=0&&p.stumble<.5){p.vy=10.3;showIfPlayer(p,'🦘 GREAT JUMP!')}}
+function doDash(p){if(p.energy>=30&&p.dashTime<.1&&p.stumble<.5){p.energy-=30;p.dashTime=.9;showIfPlayer(p,'⚡ TURBO DASH!')}}
+function nearestObstacle(p){let best=null,d=1000;for(let h of G.hazards){let dist=h.z-p.z;if(dist>0&&dist<d){best=h;d=dist}}return {h:best,d}}
+function botBrain(p,dt){let {h,d}=nearestObstacle(p);let destination=p.i%2?2.5:-2.5;
+if(h&&d<20){if(h.type==='block'||h.type==='hammer'){if(Math.abs(p.x-h.x)<3.5)destination=h.x>0?h.x-5.8:h.x+5.8;else destination=p.x}
+else if(h.type==='double'){destination=0}
+else if(h.type==='gap'){destination=h.x>0?-4.8:4.8;if(d<9&&Math.abs(p.x-h.x)<4.4&&p.y<.1&&hash(p.i+h.id)>.17)jump(p)}
+else if(h.type==='gate'){destination=Math.sin(G.time*1.55+h.phase)>0?-4.7:4.7}
+else if(h.type==='sweep'){if(d<6&&p.y<.3&&hash(p.i+h.id)>.12)jump(p);destination=p.x}
+else if(h.type==='pad'){destination=h.x}
+}
+if(p.z>340)destination=0;
+p.vx=mix(p.vx,clamp((destination-p.x)*2.2,-10,10),clamp(dt*3,0,1));p.x=clamp(p.x+p.vx*dt,-8.25,8.25);if(p.y<=.1&&Math.abs(p.vx)>1)p.angle=clamp(-p.vx*.055,-.25,.25);
+if(p.energy>50&&hash(p.i*13+Math.floor(G.time/4))>.78&&p.dashTime<.1)doDash(p)}
+function hazardCollision(p,h,t){let dz=Math.abs(h.z-p.z),dx=Math.abs(h.x-p.x);if(dz>3.2)return false;
+switch(h.type){case 'block':return dz<2.1&&dx<2.05&&p.y<2.1;case 'double':return dz<2.05&&Math.abs(p.x)>2.3&&p.y<2.1;case 'hammer':return dz<2.3&&dx<2.3&&p.y<2.7;case 'sweep':return dz<1.9&&p.y<1.24&&Math.abs(p.x-Math.sin(t*1.9+h.phase)*4.1)<2.4;case 'gate':return dz<1.7&&Math.abs(p.x-Math.sin(t*1.38+h.phase)*5.5)<1.7&&p.y<2.7;default:return false}}
+function step(dt){if(G.phase!=='race')return;G.time+=dt;const p=G.players[0];for(const a of G.players){if(a.finished)continue;a.running+=dt*(7+a.vz*.5);a.stumble=Math.max(0,a.stumble-dt);a.respawnFx=Math.max(0,a.respawnFx-dt);a.dashTime=Math.max(0,a.dashTime-dt);a.boostFx=Math.max(0,a.boostFx-dt);
+a.energy=clamp(a.energy+dt*8,0,100);
+if(a.kind==='human'){
+let mx=Number(controls.right)-Number(controls.left)+analog.x;
+a.vx=mix(a.vx,clamp(mx,-1,1)*11.8,clamp(dt*8,0,1));a.x=clamp(a.x+a.vx*dt,-8.25,8.25);a.angle=mix(a.angle,clamp(-a.vx*.046,-.34,.34),clamp(dt*6,0,1));
+if((controls.jump)&&a.y<.13&&a.vy<=0)jump(a);
+if(controls.dash&&a.dashTime<.1&&a.energy>=30)doDash(a);
+}else{botBrain(a,dt)}
+let target=a.baseSpeed+(a.kind==='human'?(Number(controls.up)+Math.max(0,-analog.y))*3.8-(Number(controls.down)+Math.max(0,analog.y))*4.9:0);
+if(a.dashTime>0)target+=10.6;if(a.stumble>0)target*=.58;
+a.vz=mix(a.vz,target,clamp(dt*3.4,0,1));a.z+=a.vz*dt;
+a.vy-=24*dt;a.y+=a.vy*dt;if(a.y<0){a.y=0;a.vy=0}
+if(pointInHole(a.x,a.z)&&a.y<.2&&a.respawnFx<.5){recover(a);continue}
+for(let h of G.hazards){if(h.type==='finish')continue;if(Math.abs(a.z-h.z)>3.3)continue;if(h.type==='pad'&&Math.abs(a.x-h.x)<2.6&&Math.abs(a.z-h.z)<2.4){a.vz=Math.max(a.vz,19);a.boostFx=.45;continue}
+if(h.type==='gap')continue;
+if(!a.hits.has(h.id)&&hazardCollision(a,h,G.time)&&a.respawnFx<.1){a.stumble=.95;a.vz*=.42;a.hits.add(h.id);a.respawnFx=.9;a.vy=Math.max(a.vy,2.8);showIfPlayer(a,'💥 BONK! Avoid the moving obstacles!')}}
+for(let c of G.coins){if(c.taken&&a.kind==='human')continue;if(Math.abs(a.z-c.z)<1.7&&Math.abs(a.x-c.x)<1.7&&a.y<3.2){if(a.kind==='human'&&!c.taken){c.taken=true;a.coins++;a.energy=clamp(a.energy+10,0,100);if(a.coins%4===0)showToast('🪙 +4 COINS! Nice route!')}else if(a.kind!=='human')a.coins+=dt*.12}}
+const cp=Math.floor(a.z/80)*80;if(cp>a.checkpoint){a.checkpoint=cp;if(a.kind==='human'&&cp>0)showToast('✅ CHECKPOINT '+Math.round(cp/80)+' CLEARED!')}
+if(a.z>=LENGTH){a.z=LENGTH;a.finished=true;a.finishTime=G.time;if(a.kind==='human')finishRace()}
+}
+if(p.finished)return;
+// End after user finishes; AI racers are still ranked by actual progress.
+updateUI();}
+function finishRace(){const me=G.players[0];G.phase='results';$('mobileControls').classList.add('hidden');$('hud').classList.add('hidden');const sorted=[...G.players].sort((a,b)=>b.z-a.z||a.finishTime-b.finishTime);const pos=sorted.indexOf(me)+1;
+$('resultPlace').textContent=pos===1?'1st':pos===2?'2nd':pos===3?'3rd':pos+'th';$('resultTitle').textContent=pos===1?'CHAMPION! 🏆':pos<=3?'PODIUM FINISH! 🎉':'NICE RUN! ✨';$('resultCaption').textContent=`${G.courseName} · ${fmt(G.time)} · ${me.coins} coins collected`;
+const best=G.best&&G.best<G.time?G.best:G.time;if(!G.best||G.time<G.best){try{localStorage.setItem('dash3d_best_'+G.course+'_'+G.difficulty,G.time.toFixed(2))}catch(e){}$('resultTag').textContent='⭐ NEW PERSONAL BEST'}else $('resultTag').textContent='🏁 RACE COMPLETE';
+$('resultsList').innerHTML=sorted.map((a,i)=>`<div class="resultRow ${a.i===0?'me':''}"><span>${i+1}. ${escapeHtml(a.name)} ${a.i===0?'(YOU)':''}</span><span>${a.finished?fmt(a.finishTime):Math.floor(a.z/LENGTH*100)+'%'}</span></div>`).join('');$('results').classList.remove('hidden')}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function updateUI(){let me=G.players[0],sorted=[...G.players].sort((a,b)=>b.z-a.z);$('placeText').textContent=(sorted.indexOf(me)+1)+' / 6';$('timeText').textContent=fmt(G.time);$('coinText').textContent=me.coins+' 🟡';$('energyText').textContent=Math.floor(me.energy)+'%';$('speedText').textContent=Math.floor(me.vz*9)+' km/h';$('progressFill').style.width=(clamp(me.z/LENGTH*100,0,100))+'%';$('checkpoint').textContent=`${Math.floor(me.z)} / ${LENGTH} m ▸ FINISH`;
+$('leaderRows').innerHTML=sorted.map((a,i)=>`<div class="playerRow ${a.i===0?'me':''}"><span><span class="tinyDot" style="background:rgb(${a.color.map(x=>Math.round(x*255)).join(',')})"></span>${i+1}. ${escapeHtml(a.name.slice(0,10))}</span><span>${a.finished?'🏁':Math.floor(a.z/LENGTH*100)+'%'}</span></div>`).join('')}
+function tipUpdate(dt){if(tipTimer>0){tipTimer-=dt;if(tipTimer<=0)$('tip').style.opacity=0}}
+// Camera with smooth chase, low cinematic and user-controlled orbit.
+let camera={x:0,y:12,z:-19,tx:0,ty:2,tz:15};
+function resize(){const ratio=Math.min(2,window.devicePixelRatio||1);let w=Math.max(1,Math.floor(window.innerWidth*ratio)),h=Math.max(1,Math.floor(window.innerHeight*ratio));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;if(!fallback)gl.viewport(0,0,w,h)}}
+function updateCamera(dt){const p=G.players[0]||{x:0,y:0,z:10,vx:0,vz:10};let wide=G.cameraMode===1;let distance=(wide?28:16)+G.zoom;let angle=G.orbit;let targetX=p.x+Math.sin(angle)*distance*.85;let targetY=p.y+(wide?16:9.2)+Math.max(0,p.vz-14)*.2;let targetZ=p.z-Math.cos(angle)*distance;
+if(G.phase==='menu'){let t=performance.now()*.0002;targetX=12*Math.sin(t);targetY=16;targetZ=18+Math.cos(t)*5}else if(G.phase==='results'){targetX=p.x+13;targetY=10;targetZ=p.z-19}
+camera.x=mix(camera.x,targetX,clamp(dt*2.7,0,1));camera.y=mix(camera.y,targetY,clamp(dt*3.3,0,1));camera.z=mix(camera.z,targetZ,clamp(dt*2.7,0,1));camera.tx=mix(camera.tx,p.x*.8,clamp(dt*4,0,1));camera.ty=mix(camera.ty,p.y+2,clamp(dt*4,0,1));camera.tz=mix(camera.tz,p.z+(wide?18:17),clamp(dt*3.4,0,1))}
+function drawCloud(x,y,z,r){ball(x,y,z,r*1.2,r*.37,r*.66,[.96,.99,1]);ball(x-r*.6,y+.1,z,r*.6,r*.42,r*.7,[1,1,1]);ball(x+r*.5,y+.18,z,r*.65,r*.42,r*.66,[1,1,1])}
+function drawTree(x,z,i){let theme=G.course;let green=theme===2?[.18,.54,.28]:theme===1?[.29,.86,.83]:[.38,.8,.57];tube(x,.9,z,.37,1.1,.37,[.55,.33,.29]);if(theme===2){for(let q=0;q<5;q++){let a=q/5*Math.PI*2;ball(x+Math.sin(a)*1.08,3,z+Math.cos(a)*.8,1.1,.5,.57,green)}}else {draw('cone',model(x,2.7,z,1.5,2.1,1.5),green,.11);draw('cone',model(x,3.8,z,1.1,1.5,1.1),rgb(green,1.12),.06)}}
+function drawScenery(z0,z1){const idx=G.course, c=courses[idx];let start=Math.floor((z0-20)/24),end=Math.ceil((z1+30)/24);
+for(let i=start;i<=end;i++){let z=i*24;if(z< -15||z>LENGTH+50)continue;for(let side of [-1,1]){let x=side*(17+hash(i*2+side+idx*71)*8);if(idx===1){let h=8+hash(i*31+side)*17;box(x,h/2-1,z,4.6,h/2,4.6,[.15,.18,.36]);for(let q=0;q<Math.min(6,Math.floor(h/3));q++)box(x-side*2.35,1.6+q*3,z, .09,.4,2.2,q%2?[.96,.31,.64]:[.26,.76,.96],.8)}else if(idx===2){drawTree(x,z,i);if(i%3===0){ball(x+side*3,1.1,z+3,2,1.1,2,[.42,.61,.42]);drawTree(x+side*4,z+8,i)}}else{let h=3+hash(i*9+side)*5;box(x,h/2,z,2.1,h/2,2.1,rgb(c.prop,1.05));ball(x,h+1.7,z,2.8,2,2.8,[1,.9,.98]);if(i%2===0)drawCloud(x+side*5,8,z,3)}}
+if(i%2===0&&idx!==1){drawCloud(-22+hash(i*5)*8,20+hash(i+44)*5,z+8,3+hash(i*3));drawCloud(20+hash(i*6)*8,22+hash(i*32)*4,z,4)}}}
+function drawCourse(z0,z1){const c=courses[G.course],first=Math.max(-12,Math.floor(z0/8)*8),last=Math.min(LENGTH+3,Math.ceil(z1/8)*8);
+// Soft distant base world. Platforms are mesh blocks; holes leave actual openings in the deck.
+box(0,-9,(first+last)*.5,150,1,(last-first)*.8,[...c.bg].map(v=>v*.79));
+for(let z=first;z<last;z+=8){let centerZ=z+4;
+for(let lane=-1;lane<=1;lane++){let xc=lane*6.34;let hole=G.hazards.some(h=>h.type==='gap'&&Math.abs(h.z-centerZ)<3.1&&Math.abs(h.x-xc)<4.2);if(hole)continue;
+let fc=(Math.round(z/8)%2===0)?c.floor:rgb(c.floor,.91);box(xc,-.37,centerZ,3.17,.36,4,fc,.07);box(xc,-.69,centerZ,3.17,.13,4,rgb(c.floor,.51))}
+for(const s of [-1,1]){box(s*9.75,.56,centerZ,.28,.6,3.95,c.rail,.35);box(s*9.75,1.45,centerZ,.12,.12,3.95,[.98,.95,1],.5);if(Math.round(z/8)%2===0)box(s*10.1,-.75,centerZ,.5,.4,3.95,rgb(c.rail,.7))}
+for(const s of [-1,1])box(s*3.15,.025,centerZ,.075,.026,1.35,c.stripe,.32);
+if(Math.round(z/8)%2===0){for(let side of [-1,1]){box(side*10.8,2.3,centerZ,.3,2.4,.4,rgb(c.rail,.7));ball(side*10.8,5,centerZ,.58,.58,.58,[1,.95,.65],.9)}}}
+// Starting arch and checkpoints; luminous support arches with horizontal crossbar.
+for(let z=0;z<=LENGTH;z+=80){if(z<z0-10||z>z1+10)continue;let col=z===LENGTH?[1,.81,.24]:z===0?[.5,1,.83]:c.rail;for(let s of [-1,1]){box(s*8.7,5,z,.38,5,.6,col,.35);ball(s*8.7,10,z,.8,.8,.8,[1,1,1],.4)}box(0,10,z,8.7,.42,.55,col,.5);for(let k=-3;k<=3;k++)box(k*2.25,9.3,z+.4,.7,.2,.22,z===LENGTH?[1,1,1]:[.96,.81,.35],.5)}
+}
+function drawHazard(h,t){const z=h.z;if(z< -9||z>LENGTH) return;
+const theme=G.course,c=courses[theme],danger=[1,.32,.36],gold=[1,.88,.3];
+if(h.type==='block'){box(h.x,1.55,z,2.0,1.55,1.25,danger);box(h.x,3.15,z,2.15,.29,1.4,gold,.5);for(let s of [-1,1])box(h.x+s*1.2,1.4,z+1.4,.14,1.3,.08,[1,.91,.51],.3)}
+else if(h.type==='double'){for(let x of [-5.5,5.5]){box(x,1.85,z,2,1.85,1.35,danger);box(x,3.85,z,2.2,.22,1.5,gold,.4)}box(0,.2,z,1.5,.08,1.5,[.39,.99,.7],.9)}
+else if(h.type==='sweep'){let x=Math.sin(t*1.9+h.phase)*4.1;tube(0,.9,z,.7,.85,.7,[.5,.41,.62]);box(x,1.36,z,2.5,.48,.75,[1,.45,.61],.34);for(let q=-1;q<=1;q++)ball(x+q*1.5,1.35,z,.48,.48,.48,gold,.2)}
+else if(h.type==='gate'){let x=Math.sin(t*1.38+h.phase)*5.5;for(let sx of [-8.4,8.4])box(sx,3.15,z,.35,3.1,.65,c.rail,.37);box(0,6.3,z,8.4,.3,.65,c.rail,.4);box(x,2.65,z,1.35,2.5,1.15,[.95,.4,.77],.25);box(x,5.25,z,1.6,.21,1.2,gold,.6)}
+else if(h.type==='gap'){for(let s=-1;s<=1;s++)if(Math.abs(s*LANE-h.x)<1){for(let edge of [-1,1])box(h.x,.09,z+edge*3.25,3,.14,.18,danger,.55)}box(h.x,0,z,2.6,.03,3.05,[.18,.24,.33],.5)}
+else if(h.type==='hammer'){let wob=Math.sin(t*1.3+h.phase)*.8;box(h.x,5.8,z,.42,5.2,.42,c.rail,.24);draw('cube',model(h.x+Math.sin(wob)*1.3,2.2,z,2.0,1.75,1.2,0,0,wob),danger);for(let sx of [-1,1])ball(h.x+Math.sin(wob)*1.3+sx*1.3,2.25,z,.5,.5,.5,gold,.27)}
+else if(h.type==='pad'){box(h.x,.04,z,2.35,.12,2.05,[.11,.96,.91],.7);for(let q=-1;q<=1;q++)box(h.x+q*.9,.15,z,.17,.04,.9,[.96,1,.92],.9)}
+}
+function drawCollectible(c,t){if(c.taken)return;let bob=Math.sin(t*4+c.z)*.23;draw('tube',model(c.x,1.3+bob,c.z,.65,.13,.65,t*2,Math.PI/2),[1,.74,.18],.83);ball(c.x,1.3+bob,c.z,.22,.22,.22,[1,.97,.61],.8)}
+function drawAvatar(p,t){let x=p.x,z=p.z,y=p.y,headBob=p.y>0?0:Math.sin(p.running*1.35)*.07;let c=p.color,running=Math.sin(p.running*2.4),running2=Math.sin(p.running*2.4+Math.PI),lean=clamp(-p.vx*.028,-.35,.35);if(p.stumble>.45)lean+=Math.sin(t*20)*.23;
+shadow(x,z,1.25,p.respawnFx>0?.14:.24);
+if(p.dashTime>0){for(let k=0;k<3;k++)ball(x+Math.sin(t*8+k)*.17,.8+ k*.4,z-1-k*.65,.4+k*.22,.25,.7,[.52,.98,1],.6)}
+// Detailed rig: feet, lower legs, articulated arms, gloves, jacket, hip belt, head/visor and backpack.
+let base=mult(trans(x,y+headBob,z),rz(lean));const part=(mesh,px,py,pz,sx,sy,sz,color,rot=0,emit=0)=>draw(mesh,mult(base,model(px,py,pz,sx,sy,sz,0,0,rot)),color,emit);
+part('ball',0,1.2,0,.58,.38,.35,[.17,.18,.34]);
+for(let s of [-1,1]){let stepRun=p.y>0?-.27:((s===1?running:running2)*.33);part('cube',s*.33,.67,stepRun,.21,.54,.22,[.17,.18,.34],(s===1?running:running2)*.23);part('ball',s*.34,.14,stepRun+.22,.32,.2,.5,[1,.99,.97]);part('ball',s*.34,.24,stepRun-.03,.22,.25,.22,c)}
+part('ball',0,2.0,0,.71,.92,.46,c);
+part('cube',0,1.49,.48,.55,.13,.09,[1,.94,.73]);
+part('ball',0,2.0,-.5,.41,.6,.18,rgb(c,.61));part('ball',0,2.2,-.66,.22,.26,.08,[.94,.86,.98],0,.1);
+for(let s of [-1,1]){let armAngle=p.y>0?-.7:((s===1?running2:running)*.35);part('ball',s*.83,2.28,0,.24,.22,.25,rgb(c,.91));part('cube',s*.96,1.83,armAngle*.34,.23,.45,.23,[.19,.2,.35],armAngle*.45);part('ball',s*1.05,1.4,armAngle*.6,.27,.27,.25,[1,.79,.55])}
+part('ball',0,3.02,0,.56,.58,.53,[1,.83,.58]);part('ball',0,3.25,-.01,.61,.39,.57,c);
+// Big expressive eyes face toward +Z.
+for(let s of [-1,1]){part('ball',s*.19,3.08,.46,.105,.145,.07,[1,1,1]);part('ball',s*.19,3.08,.52,.052,.085,.04,[.13,.15,.27])}
+part('ball',0,2.84,.51,.19,.065,.05,[.56,.25,.31]);
+part('ball',0,3.63,0,.3,.12,.3,[1,.91,.67]);
+if(p.respawnFx>.2){part('ball',0,1.8,0,1.25,1.9,1.25,[.66,1,1],0,.4)}
+}
+function drawFinish(){let z=LENGTH;for(let k=0;k<9;k++)for(let s=0;s<2;s++){let xx=-8.5+k*2.1,zz=z+.1+s*.25;box(xx,0.1,zz,1.03,.045,.13,(k+s)%2?[.08,.08,.13]:[1,1,1],.3)}}
+function render(dt){resize();let c=courses[G.course];if(!fallback){gl.clearColor(...c.bg,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(prog)}updateCamera(dt);let p=G.players[0]||{z:0};let eye=[camera.x,camera.y,camera.z],target=[camera.tx,camera.ty,camera.tz],v=lookAt(eye,target);let fov=G.cameraMode===1?65:70;if(p.dashTime>0)fov+=7;let proj=perspective(fov*Math.PI/180,canvas.width/canvas.height,.18,230);if(fallback){softQueue=[];softView={eye,v,proj,theme:c}}else{gl.uniformMatrix4fv(loc.proj,false,proj);gl.uniformMatrix4fv(loc.view,false,v);gl.uniform3fv(loc.camera,eye);gl.uniform3fv(loc.fog,c.fog);gl.uniform1f(loc.fogStart,G.course===1?55:73);gl.uniform1f(loc.fogEnd,G.course===1?130:157)}
+let start=Math.max(-14,p.z-27),end=Math.min(LENGTH+35,p.z+115);drawCourse(start,end);drawScenery(start,end);for(let h of G.hazards)if(h.z>start-5&&h.z<end+5)drawHazard(h,G.time);for(let coin of G.coins)if(coin.z>start&&coin.z<end)drawCollectible(coin,G.time);for(let a of G.players)if(a.z>start-7&&a.z<end+5)drawAvatar(a,G.time);
+if(p.z>LENGTH-115)drawFinish();if(fallback)softFlush();}
+
+// 3D software fallback: projects the SAME world-space geometry when WebGL is disabled.
+// This keeps the HTML playable in constrained browsers and headless test environments.
+function softVec(m,x,y,z){return [m[0]*x+m[4]*y+m[8]*z+m[12],m[1]*x+m[5]*y+m[9]*z+m[13],m[2]*x+m[6]*y+m[10]*z+m[14]]}
+function softProject(x,y,z){let v=softView.v,p=softView.proj;
+let cx=v[0]*x+v[4]*y+v[8]*z+v[12],cy=v[1]*x+v[5]*y+v[9]*z+v[13],cz=v[2]*x+v[6]*y+v[10]*z+v[14];let w=-cz;if(w<.2)return null;
+return {x:(cx*p[0]/w*.5+.5)*canvas.width,y:(-.5*cy*p[5]/w+.5)*canvas.height,d:w}}
+function softCss(col,opacity=1,light=1,fog=0){let c=softView.theme.fog;return 'rgba('+col.map((x,i)=>Math.round(clamp(mix(x*light,c[i],fog),0,1)*255)).join(',')+','+opacity+')'}
+function softFlush(){let w=canvas.width,h=canvas.height,c=softView.theme;let grad=ctx.createLinearGradient(0,0,0,h);grad.addColorStop(0,softCss(c.bg,1,.79));grad.addColorStop(.7,softCss(c.fog,1,1.08));grad.addColorStop(1,softCss(c.fog,1,.92));ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+let polys=[];
+const faceIndices=[[0,1,3,2],[4,6,7,5],[0,4,5,1],[2,3,7,6],[0,2,6,4],[1,5,7,3]];
+for(let item of softQueue){let m=item.m,origin=softProject(m[12],m[13],m[14]);if(!origin||origin.d>175)continue;let fog=clamp((origin.d-65)/100,0,.8),sx=Math.hypot(m[0],m[1],m[2]),sy=Math.hypot(m[4],m[5],m[6]),sz=Math.hypot(m[8],m[9],m[10]);
+if(item.mesh==='ball'||item.mesh==='tube'||item.mesh==='cone'){
+let pixelScale=h*.74/origin.d;let rx=Math.max(1.0,pixelScale*Math.max(sx,sz)),ry=Math.max(1,pixelScale*sy);if(item.mesh==='cone')rx*=.88;
+polys.push({z:origin.d,type:'ellipse',x:origin.x,y:origin.y,rx,ry,color:softCss(item.color,item.alpha,1.16+item.emissive*.22,fog),gloss:item.mesh==='ball'});continue}
+let pts=[];for(let vz of [-1,1])for(let vy of [-1,1])for(let vx of [-1,1])pts.push(softProject(...softVec(m,vx,vy,vz)));
+let coords=[[-1,-1,-1],[1,-1,-1],[-1,1,-1],[1,1,-1],[-1,-1,1],[1,-1,1],[-1,1,1],[1,1,1]];
+for(let face of faceIndices){let corners=face.map(i=>pts[i]);if(corners.some(x=>!x))continue;let mean=corners.reduce((s,p)=>s+p.d,0)/4;
+let a=softVec(m,...coords[face[0]]),b=softVec(m,...coords[face[1]]),d=softVec(m,...coords[face[2]]),ab=b.map((v,i)=>v-a[i]),ad=d.map((v,i)=>v-a[i]);let n=norm(cross(ab,ad));let l=.65+.31*Math.max(0,dot(n,norm([-.43,.86,-.25])));let area=Math.abs(corners.reduce((s,p,i)=>s+p.x*corners[(i+1)%4].y-corners[(i+1)%4].x*p.y,0));if(area<.03)continue;
+polys.push({z:mean,type:'polygon',corners,color:softCss(item.color,item.alpha,l+item.emissive*.2,fog)})}
+}
+polys.sort((a,b)=>b.z-a.z);ctx.lineJoin='round';for(let p of polys){ctx.fillStyle=p.color;if(p.type==='ellipse'){ctx.beginPath();ctx.ellipse(p.x,p.y,Math.min(4000,p.rx),Math.min(4000,p.ry),0,0,Math.PI*2);ctx.fill();if(p.gloss&&p.ry>6){ctx.fillStyle='rgba(255,255,255,.12)';ctx.beginPath();ctx.ellipse(p.x-p.rx*.15,p.y-p.ry*.27,p.rx*.58,p.ry*.32,0,0,Math.PI*2);ctx.fill()}}else{ctx.beginPath();p.corners.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();ctx.fill()}}
+}
+
+function loop(now){let dt=Math.min(.036,(now-prevTime)/1000||.016);prevTime=now;if(G.phase==='race')step(dt);tipUpdate(dt);if(G.phase!=='paused')render(dt);requestAnimationFrame(loop)}
+function pause(){if(G.phase!=='race')return;G.phase='paused';$('pauseOverlay').classList.remove('hidden');$('mobileControls').classList.add('hidden')}
+function resume(){if(G.phase!=='paused')return;G.phase='race';$('pauseOverlay').classList.add('hidden');$('mobileControls').classList.remove('hidden');prevTime=performance.now()}
+function mainMenu(){G.phase='menu';$('menu').classList.remove('hidden');$('pauseOverlay').classList.add('hidden');$('results').classList.add('hidden');$('mobileControls').classList.add('hidden');$('hud').classList.add('hidden')}
+function setCamera(){G.cameraMode=(G.cameraMode+1)%2;showToast('📷 CAMERA: '+(G.cameraMode===0?'CHASE':'WIDE'))}
+function setCourse(n){G.course=n;document.querySelectorAll('.pick').forEach(x=>x.classList.toggle('active',Number(x.dataset.course)===n));buildTrack(n);document.querySelector('meta[name=theme-color]').content=courses[n].skyColor}
+function setSkin(n){G.skin=n;document.querySelectorAll('.skin').forEach(x=>x.classList.toggle('active',Number(x.dataset.skin)===n))}
+$('coursePicks').addEventListener('click',e=>{let el=e.target.closest('.pick');if(el)setCourse(Number(el.dataset.course))});$('skins').addEventListener('click',e=>{let el=e.target.closest('.skin');if(el)setSkin(Number(el.dataset.skin))});$('difficulty').addEventListener('change',e=>G.difficulty=e.target.value);
+$('startBtn').onclick=resetGame;$('retryBtn').onclick=resetGame;$('menuBtn').onclick=mainMenu;$('quitBtn').onclick=mainMenu;$('pauseBtn').onclick=pause;$('resumeBtn').onclick=resume;$('camBtn').onclick=setCamera;
+window.addEventListener('keydown',e=>{let key=e.key.toLowerCase();if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(key))e.preventDefault();if(key==='escape'||key==='p'){G.phase==='race'?pause():G.phase==='paused'?resume():null;return}if(key==='c'&&G.phase==='race')setCamera();if(key===' '){controls.jump=true}if(key==='shift'){controls.dash=true}if(key==='a'||key==='arrowleft')controls.left=true;if(key==='d'||key==='arrowright')controls.right=true;if(key==='w'||key==='arrowup')controls.up=true;if(key==='s'||key==='arrowdown')controls.down=true});
+window.addEventListener('keyup',e=>{let key=e.key.toLowerCase();if(key===' ')controls.jump=false;if(key==='shift')controls.dash=false;if(key==='a'||key==='arrowleft')controls.left=false;if(key==='d'||key==='arrowright')controls.right=false;if(key==='w'||key==='arrowup')controls.up=false;if(key==='s'||key==='arrowdown')controls.down=false});window.addEventListener('blur',()=>{for(let k in controls)controls[k]=false;if(G.phase==='race')pause()});
+// Touch joystick + buttons with pointer capture.
+let joystickPointer=-1;let joy=$('joyOuter'),knob=$('joyKnob');function moveJoy(e){let r=joy.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;let dx=clamp((e.clientX-cx)/(r.width*.33),-1,1),dy=clamp((e.clientY-cy)/(r.height*.33),-1,1);analog.x=dx;analog.y=dy;knob.style.transform=`translate(${dx*33}px,${dy*33}px)`}
+joy.addEventListener('pointerdown',e=>{e.preventDefault();joystickPointer=e.pointerId;joy.setPointerCapture(e.pointerId);moveJoy(e)});joy.addEventListener('pointermove',e=>{if(e.pointerId===joystickPointer)moveJoy(e)});function endJoy(e){if(e.pointerId!==joystickPointer)return;joystickPointer=-1;analog.x=analog.y=0;knob.style.transform='translate(0px,0px)'}joy.addEventListener('pointerup',endJoy);joy.addEventListener('pointercancel',endJoy);
+for(let [id,k] of [['jumpBtn','jump'],['dashBtn','dash']]){let b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();controls[k]=true;b.setPointerCapture(e.pointerId)});b.addEventListener('pointerup',()=>controls[k]=false);b.addEventListener('pointercancel',()=>controls[k]=false);b.addEventListener('lostpointercapture',()=>controls[k]=false)}
+let drag=null;canvas.addEventListener('pointerdown',e=>{if(G.phase!=='race')return;drag={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;let delta=(e.clientX-drag.x);G.orbit=clamp(G.orbit+delta*.004,-1.1,1.1);drag.x=e.clientX});canvas.addEventListener('pointerup',()=>drag=null);canvas.addEventListener('pointercancel',()=>drag=null);canvas.addEventListener('wheel',e=>{if(G.phase==='race')G.zoom=clamp(G.zoom+e.deltaY*.012,-5,13)},{passive:true});
+window.addEventListener('resize',resize);
+setCourse(0);setSkin(0);G.players=[makeRacer(0,'Dash Hero','human')];$('loading').classList.add('hidden');prevTime=performance.now();requestAnimationFrame(loop);
+})();
+</script>
+</body></html>
