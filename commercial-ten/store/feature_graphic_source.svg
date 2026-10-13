@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500" role="img" aria-label="Tenfold Arcade feature graphic concept">
+<defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#101d3d"/><stop offset="1" stop-color="#26386c"/></linearGradient></defs>
+<rect width="1024" height="500" fill="url(#g)"/><circle cx="865" cy="248" r="158" fill="#324b82" opacity=".65"/>
+<path d="M740 170l60-65 64 65-64 61zm-40 98l56-29 44 58-62 36z" fill="#72e5db" opacity=".8"/><path d="M885 240l70-18-22 65-66 10z" fill="#f6bb79"/>
+<text x="84" y="200" font-family="Arial,sans-serif" font-size="92" font-weight="bold" fill="#ffffff">TENFOLD</text>
+<text x="86" y="276" font-family="Arial,sans-serif" font-size="63" font-weight="bold" fill="#80e7df">ARCADE</text>
+<text x="89" y="345" font-family="Arial,sans-serif" font-size="27" letter-spacing="4" fill="#cbd7f6">TEN WORLDS. ONE ARCADE.</text>
+</svg>

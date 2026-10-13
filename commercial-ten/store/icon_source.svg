@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Tenfold Arcade vector icon">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#172957"/><stop offset="1" stop-color="#0a142c"/></linearGradient><linearGradient id="gl" x2="1" y2="0"><stop stop-color="#81f0e0"/><stop offset="1" stop-color="#7ca1ff"/></linearGradient></defs>
+<rect width="512" height="512" rx="105" fill="url(#bg)"/><rect x="70" y="82" width="372" height="350" rx="48" fill="#24355d" stroke="#698ab6" stroke-width="8"/>
+<path d="M152 177h55v164h-36V216l-30 16v-38z" fill="url(#gl)"/>
+<path d="M317 168c-63 0-97 42-97 91s34 90 97 90 97-42 97-90-34-91-97-91zm0 39c34 0 55 22 55 52s-21 51-55 51-55-21-55-51 21-52 55-52z" fill="#f8d88b"/>
+<path d="M157 380h194" stroke="#80a8ff" stroke-width="12" stroke-linecap="round"/></svg>
