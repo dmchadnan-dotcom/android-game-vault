@@ -1,20 +1,28 @@
-name: Build Tenfold Arcade APK
+name: Build Tenfold Arcade APK and AAB
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
-      - 'commercial-ten/**'
+      - 'commercial-ten/app/**'
+      - 'commercial-ten/build.gradle'
+      - 'commercial-ten/settings.gradle'
+      - 'commercial-ten/gradle.properties'
       - '.github/workflows/build-tenfold.yml'
+
 jobs:
-  android:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
       contents: read
+    defaults:
+      run:
+        working-directory: commercial-ten
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
@@ -28,34 +36,28 @@ jobs:
             test -n "$SDKMGR"
             "$SDKMGR" --install 'platforms;android-36' 'build-tools;36.0.0'
           fi
-      - uses: gradle/actions/setup-gradle@v4
+      - name: Set up Gradle 8.13
+        uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.13'
-      - name: Assemble Tenfold Android app
-        shell: bash
+      - name: Check source completeness
         run: |
-          set -euo pipefail
-          rm -rf app/src/main/assets/games
-          cp commercial-ten/index.html app/src/main/assets/index.html
-          mkdir -p app/src/main/res/drawable
-          cp commercial-ten/tenfold_icon.xml app/src/main/res/drawable/tenfold_icon.xml
-          sed -i "s/applicationId 'com.brightforge.gamevault'/applicationId 'com.brightforge.tenfold'/g" app/build.gradle
-          sed -i 's/android:label="Indie Game Vault"/android:label="Tenfold Arcade"/' app/src/main/AndroidManifest.xml
-          sed -i 's|android:icon="@android:drawable/sym_def_app_icon"|android:icon="@drawable/tenfold_icon"|' app/src/main/AndroidManifest.xml
-          grep 'com.brightforge.tenfold' app/build.gradle
-          grep 'Tenfold Arcade' app/src/main/AndroidManifest.xml
           test -s app/src/main/assets/index.html
-      - name: Build debug APK and unsigned release AAB
+          test -s app/src/main/java/com/brightforge/tenfold/MainActivity.java
+          test -s app/src/main/AndroidManifest.xml
+      - name: Compile test APK and unsigned Play bundle
         run: gradle --no-daemon :app:assembleDebug :app:bundleRelease
-      - name: Upload APK
+      - name: Upload Android test APK
         uses: actions/upload-artifact@v4
         with:
           name: Tenfold-Arcade-Debug-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: commercial-ten/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+          retention-days: 30
       - name: Upload unsigned AAB for inspection only
         uses: actions/upload-artifact@v4
         with:
-          name: Tenfold-Arcade-Unsigned-AAB-Not-For-Play
-          path: app/build/outputs/bundle/release/*.aab
+          name: Tenfold-Arcade-Unsigned-AAB-NOT-PLAY-READY
+          path: commercial-ten/app/build/outputs/bundle/release/*.aab
           if-no-files-found: error
+          retention-days: 30
