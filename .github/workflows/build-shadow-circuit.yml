@@ -1,0 +1,50 @@
+name: Build Shadow Circuit Fighters (APK and AAB)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'shadow-circuit/android/**'
+      - '.github/workflows/build-shadow-circuit.yml'
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    defaults:
+      run:
+        working-directory: shadow-circuit/android
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Validate complete game source
+        run: |
+          test -s app/src/main/assets/index.html
+          test -s app/src/main/java/com/brightforge/shadowcircuit/MainActivity.java
+          test -s app/src/main/res/drawable-nodpi/app_icon.png
+      - name: Install Android SDK if needed
+        run: |
+          set -e
+          if [ ! -d "$ANDROID_HOME/platforms/android-36" ]; then
+            SDKMGR="$(find "$ANDROID_HOME/cmdline-tools" -path '*/bin/sdkmanager' -type f | sort -V | tail -1)"
+            "$SDKMGR" --install "platforms;android-36" "build-tools;36.0.0"
+          fi
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Build offline APK and unsigned AAB
+        run: gradle --no-daemon :app:assembleDebug :app:bundleRelease
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Shadow-Circuit-Debug-APK
+          path: shadow-circuit/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Shadow-Circuit-Unsigned-AAB
+          path: shadow-circuit/android/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: error
