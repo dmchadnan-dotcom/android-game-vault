@@ -1,11 +1,6 @@
 name: Build Shadow Circuit Fighters (APK and AAB)
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'shadow-circuit/android/**'
-      - '.github/workflows/build-shadow-circuit.yml'
 permissions:
   contents: read
 jobs:
