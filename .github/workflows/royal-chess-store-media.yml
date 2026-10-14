@@ -1,0 +1,46 @@
+name: Publish Royal Chess Store PNGs
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'royal-chess/scripts/generate_store_media.py'
+      - '.github/workflows/royal-chess-store-media.yml'
+permissions:
+  contents: write
+jobs:
+  store-media:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install image and browser capture dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pillow playwright
+          if ! command -v google-chrome >/dev/null 2>&1 && ! command -v chromium >/dev/null 2>&1; then
+            python -m playwright install --with-deps chromium
+          fi
+      - name: Capture real Royal Chess mobile gameplay
+        run: python royal-chess/scripts/generate_store_media.py
+      - name: Commit store PNGs
+        run: |
+          set -eu
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add royal-chess/store/*.png
+          if git diff --cached --quiet; then
+            echo "Royal Chess store PNGs already up to date"
+          else
+            git commit -m "Add Royal Chess screenshots, app icon and store feature graphic"
+            git push origin HEAD:main
+          fi
+      - name: Upload store image archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: Royal-Chess-Play-Store-PNGs
+          path: royal-chess/store/*.png
+          if-no-files-found: error
