@@ -1,0 +1,53 @@
+name: Build MetroBloom City Builder
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'metrobloom/**'
+      - '.github/workflows/build-metrobloom.yml'
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: metrobloom
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Check Android SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d "$ANDROID_HOME"
+          if [ ! -d "$ANDROID_HOME/platforms/android-36" ]; then
+            SDKMGR="$(find "$ANDROID_HOME/cmdline-tools" -path '*/bin/sdkmanager' -type f | sort -V | tail -1)"
+            test -n "$SDKMGR"
+            "$SDKMGR" --install "platforms;android-36" "build-tools;36.0.0"
+          fi
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Check game JavaScript syntax
+        run: |
+          node -e "const fs=require('fs');const s=fs.readFileSync('app/src/main/assets/index.html','utf8');const x=s.match(/<script>([\\s\\S]*?)<\\/script>/);if(!x)throw Error('missing script');new Function(x[1]);"
+      - name: Compile Android APK and unsigned AAB
+        run: gradle --no-daemon :app:assembleDebug :app:bundleRelease
+      - name: Upload Android test APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: MetroBloom-City-Builder-Debug-APK
+          path: metrobloom/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+      - name: Upload unsigned AAB for inspection only
+        uses: actions/upload-artifact@v4
+        with:
+          name: MetroBloom-Unsigned-AAB-NOT-PLAY-READY
+          path: metrobloom/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: error

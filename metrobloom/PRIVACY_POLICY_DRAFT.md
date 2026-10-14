@@ -1,0 +1,2 @@
+# MetroBloom Privacy Policy (DRAFT)
+The offline prototype has no account registration, ads, analytics or network permission. Saved cities stay in local device storage; users can optionally export a JSON backup. Confirm these statements for the final released version. Add developer identity, support contact, effective date, data retention and deletion instructions, target audience disclosures, and host this text at a public HTTPS URL before Play Store publishing.
