@@ -1,0 +1,2 @@
+# Privacy policy draft
+Grandmaster Arena 3D runs offline. It requires no sign-in, personal data collection, Internet permission, analytics, or advertising SDK. Preferences and game progress are stored locally on-device and can be removed by clearing app storage. Before Google Play submission add publisher support information, publish this policy at a public URL, and complete Data safety declarations. Future ads and online services require a revised policy.

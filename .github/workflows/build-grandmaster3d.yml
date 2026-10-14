@@ -1,0 +1,57 @@
+name: Build Grandmaster Arena 3D Chess
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'grandmaster3d/**'
+      - '.github/workflows/build-grandmaster3d.yml'
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: grandmaster3d
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Ensure Android SDK 36
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d "$ANDROID_HOME"
+          if [ ! -d "$ANDROID_HOME/platforms/android-36" ]; then
+            SDKMGR="$(find "$ANDROID_HOME/cmdline-tools" -path '*/bin/sdkmanager' -type f | sort -V | tail -1)"
+            test -n "$SDKMGR"
+            "$SDKMGR" --install 'platforms;android-36' 'build-tools;36.0.0'
+          fi
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Verify standalone 3D game and Android source
+        run: |
+          set -eu
+          test -s app/src/main/assets/index.html
+          grep -q 'class Board3DFallback' app/src/main/assets/index.html
+          grep -q 'class ChessEngine' app/src/main/assets/index.html
+          test -s app/src/main/java/com/brightforge/grandmasterarena3d/MainActivity.java
+      - name: Build Android test APK and unsigned release bundle
+        run: gradle --no-daemon :app:assembleDebug :app:bundleRelease
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Grandmaster-Arena-3D-Android-Test-APK
+          path: grandmaster3d/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Grandmaster-Arena-3D-Unsigned-AAB-NOT-PLAY-READY
+          path: grandmaster3d/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: error
+          retention-days: 30

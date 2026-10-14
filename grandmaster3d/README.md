@@ -1,0 +1,3 @@
+# Grandmaster Arena 3D
+
+Original offline 3D chess game with WebGL and software-projected 3D fallback, six relative AI difficulty settings, chess clock, move history, hints, undo, themes, local 2-player, and 2D mode. Correct starting-position perft counts to depth 4: 20/400/8902/197281. Java 17, Gradle 8.13, AGP 8.13.2, compileSdk/targetSdk 36, minSdk 26. Open this folder in Android Studio; build `gradle :app:assembleDebug :app:bundleRelease`. The AAB produced by CI is UNSIGNED and cannot be used for Google Play without release signing. Physical Android verification and Play Console submission are pending.
