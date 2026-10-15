@@ -1,0 +1,56 @@
+name: Build Royal Ludo Studio (APK and AAB)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'royal-ludo/**'
+      - '.github/workflows/build-royal-ludo.yml'
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: royal-ludo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Android API 36
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d "$ANDROID_HOME"
+          if [ ! -d "$ANDROID_HOME/platforms/android-36" ]; then
+            SDKMGR="$(find "$ANDROID_HOME/cmdline-tools" -path '*/bin/sdkmanager' -type f | sort -V | tail -1)"
+            test -n "$SDKMGR"
+            "$SDKMGR" --install 'platforms;android-36' 'build-tools;36.0.0'
+          fi
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Verify offline game and Java
+        run: |
+          test -s app/src/main/assets/index.html
+          test -s app/src/main/java/com/brightforge/royalludo/MainActivity.java
+      - name: Build debug APK and unsigned release AAB
+        run: gradle --no-daemon :app:assembleDebug :app:bundleRelease
+      - name: Upload test APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Royal-Ludo-Studio-Debug-APK
+          path: royal-ludo/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+          if-no-files-found: error
+      - name: Upload unsigned AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: Royal-Ludo-Studio-Unsigned-AAB-NOT-PLAY-READY
+          path: royal-ludo/app/build/outputs/bundle/release/app-release.aab
+          retention-days: 30
+          if-no-files-found: error
