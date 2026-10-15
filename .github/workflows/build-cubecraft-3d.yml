@@ -16,13 +16,13 @@ jobs:
         with: { distribution: temurin, java-version: '17' }
       - uses: gradle/actions/setup-gradle@v4
         with: { gradle-version: '8.13' }
-      - name: Setup Android SDK API 36
+      - name: Install Android SDK 36 if needed
         run: |
           if [ ! -d "$ANDROID_HOME/platforms/android-36" ]; then
             SDKMGR="$(find "$ANDROID_HOME/cmdline-tools" -path '*/bin/sdkmanager' -type f | sort -V | tail -1)"
             "$SDKMGR" --install 'platforms;android-36' 'build-tools;36.0.0'
           fi
-      - name: Validate offline sources
+      - name: Check offline solver
         run: |
           test -s app/src/main/assets/index.html
           test -s app/src/main/assets/app.js
@@ -40,4 +40,13 @@ jobs:
         with:
           name: CubeCraft-3D-Unsigned-AAB-NOT-PLAY-READY
           path: cubecraft-3d/android-studio/app/build/outputs/bundle/release/app-release.aab
+          retention-days: 30
+      - name: Package complete standalone offline web
+        run: |
+          cd ..
+          zip -q -r ../cubecraft-web.zip index.html app.js solver-worker.js vendor LICENSE-THIRD-PARTY.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CubeCraft-3D-Offline-Web
+          path: cubecraft-3d/cubecraft-web.zip
           retention-days: 30
