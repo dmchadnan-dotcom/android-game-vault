@@ -1,0 +1,2 @@
+# Neon XO Arena privacy policy draft
+This offline app requests no account information and no Internet permission. Locally saved gameplay statistics, records, and settings remain on device. There are no third-party analytics, ads or purchases in the current build. Publisher must fill in developer identity, contact email, effective date and host this policy before Google Play release. Update if ads, analytics or cloud services are later added.
