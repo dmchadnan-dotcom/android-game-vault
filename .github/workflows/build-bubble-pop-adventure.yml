@@ -1,0 +1,61 @@
+name: Build Bubble Pop Adventure Android
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'bubble-pop-adventure/**'
+      - '.github/workflows/build-bubble-pop-adventure.yml'
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: bubble-pop-adventure/android-studio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install Android SDK 36 if needed
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d "$ANDROID_HOME"
+          if [ ! -d "$ANDROID_HOME/platforms/android-36" ]; then
+            SDKMGR="$(find "$ANDROID_HOME/cmdline-tools" -path '*/bin/sdkmanager' -type f | sort -V | tail -1)"
+            test -n "$SDKMGR"
+            "$SDKMGR" --install 'platforms;android-36' 'build-tools;36.0.0'
+          fi
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Confirm assets and Java entry point
+        run: |
+          test -s app/src/main/assets/index.html
+          test -s app/src/main/java/com/brightforge/bubblepopadventure/MainActivity.java
+          grep -q 'BubbleApp' app/src/main/assets/index.html
+      - name: Build Android debug APK and unsigned release AAB
+        run: gradle --no-daemon :app:assembleDebug :app:bundleRelease
+      - name: Verify packaged game asset
+        run: |
+          unzip -l app/build/outputs/apk/debug/app-debug.apk | grep 'assets/index.html'
+          test -s app/build/outputs/bundle/release/app-release.aab
+      - name: Upload Android debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Bubble-Pop-Adventure-Android-Debug-APK
+          path: bubble-pop-adventure/android-studio/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
+      - name: Upload unsigned release AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: Bubble-Pop-Adventure-Unsigned-AAB-NOT-PLAY-READY
+          path: bubble-pop-adventure/android-studio/app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+          retention-days: 30
