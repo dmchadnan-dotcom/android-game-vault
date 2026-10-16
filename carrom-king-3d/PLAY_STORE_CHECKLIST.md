@@ -1,0 +1,12 @@
+# Commercial-release checklist
+- [x] Offline browser game and Android Studio code
+- [x] Android API 36, min SDK 26
+- [x] No Internet permission
+- [x] Automated browser and rules tests run locally
+- [ ] Physical-device performance/functional test across manufacturers
+- [ ] Confirm rights to name and original branding, check package ID uniqueness
+- [ ] Add your publisher details and host public privacy policy
+- [ ] Validate all Play Console declarations: Data Safety, age rating, developer details
+- [ ] Signed release AAB under a private upload key and secure credential custody
+- [ ] Test via Play Internal/Closed tracks and address pre-launch reports
+- [ ] Production Play Store approval and publication
