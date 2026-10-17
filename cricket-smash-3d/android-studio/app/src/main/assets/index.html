@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1"><meta name="theme-color" content="#081c2c"><meta name="description" content="Cricket Smash 3D: premium offline timing cricket with quick matches, super overs, 30 career challenges, and practice nets."><title>Cricket Smash 3D — Stadium Edition</title><style>
+:root{--bg:#071826;--panel:#10283a;--line:#2b5160;--gold:#ffda8b;--lime:#8af8c6;--white:#f7fcff;--muted:#93b2c2;--danger:#ff7192;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--white)}*{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;overflow-x:hidden;background:var(--bg)}button,select{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{opacity:.38;cursor:not-allowed}button:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}#app{min-height:100vh;background:radial-gradient(ellipse at 50% 0,#17475d,transparent 56%),#071826}header{max-width:530px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:18px 19px 13px;gap:12px}.brand{display:flex;align-items:center;gap:10px}.logo{width:45px;height:45px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(140deg,#f8d992,#ad8240);color:#073326;box-shadow:0 8px 35px #e3b35a44;font-size:25px;font-weight:900}.brand-text b{display:block;font-size:15px;letter-spacing:.1em;line-height:1.15}.brand-text small{color:var(--muted);font-size:10px;letter-spacing:.24em}.iconbtn{border:1px solid #35596a;background:#143448;color:white;border-radius:14px;min-width:43px;min-height:43px;font-size:19px}.shell{width:min(100%,530px);margin:auto;padding:0 13px 35px}.eyebrow{font-size:11px;letter-spacing:.23em;text-transform:uppercase;color:var(--lime);font-weight:850}.hero{position:relative;border:1px solid #397072;border-radius:25px;overflow:hidden;background:linear-gradient(#0b3743,#092132);box-shadow:0 22px 50px #02091288}.hero-bg{height:255px;position:relative;background:radial-gradient(ellipse at 40% 85%,#2f8258 0 25%,transparent 45%),linear-gradient(180deg,#164862 0%,#1f6b75 45%,#133d45 47%,#134e32 100%)}.hero-bg:before{content:'';position:absolute;inset:20px 0 0;background:repeating-linear-gradient(90deg,transparent 0 30px,#ffc96f16 31px 33px);clip-path:polygon(0 50%,100% 50%,100% 77%,0 77%)}.hero-bg:after{content:'';position:absolute;bottom:1px;left:40%;width:20%;height:52%;background:linear-gradient(#e9bc83,#c99765);clip-path:polygon(43% 0,57% 0,100% 100%,0 100%);opacity:.9}.hero-content{position:absolute;inset:17px 18px auto;pointer-events:none}.hero h1{font-size:clamp(36px,10vw,49px);line-height:.98;letter-spacing:-.065em;margin:12px 0 10px;text-shadow:0 4px 16px #061826ad}.hero h1 em{font-style:normal;color:var(--gold)}.hero p{max-width:230px;font-size:12px;line-height:1.6;color:#dbf7fa;margin:0}.hero-bottom{padding:17px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(100deg,#123d4a,#17363f)}.hero-bottom b{font-size:13px}.hero-bottom small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.pill{border:1px solid #417578;background:#1a5b62;color:#b4ffee;padding:8px 12px;border-radius:999px;font-size:11px;font-weight:800;white-space:nowrap}.section-title{display:flex;justify-content:space-between;align-items:center;margin:24px 4px 12px}.section-title h2{font-size:18px;letter-spacing:-.03em;margin:0}.section-title span{color:var(--muted);font-size:11px}.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.mode{border:1px solid #285367;min-height:150px;text-align:left;color:white;display:flex;flex-direction:column;align-items:flex-start;background:linear-gradient(145deg,#14374b,#0e2637);border-radius:20px;padding:15px 13px;box-shadow:0 6px 16px #0003;transition:transform .15s,border-color .15s}.mode:active{transform:scale(.975)}.mode:hover{border-color:#d1aa6c}.mode .emoji{font-size:28px;margin-bottom:9px}.mode b{font-size:15px}.mode p{font-size:11px;line-height:1.4;color:#a4bdc9;min-height:28px;margin:5px 0 9px}.mode .mini{font-size:10px;font-weight:900;color:#ffd98a;letter-spacing:.07em}.mode:nth-child(2){background:linear-gradient(145deg,#55412b,#252e34);border-color:#66563a}.mode:nth-child(3){background:linear-gradient(145deg,#254b45,#0f2c38)}.mode:nth-child(4){background:linear-gradient(145deg,#3a3054,#142b3b)}.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}.stat{border:1px solid #2d485c;background:#102a3a;border-radius:15px;padding:13px 8px;text-align:center}.stat b{display:block;font-size:20px;color:var(--gold)}.stat small{display:block;font-size:10px;color:var(--muted);margin-top:3px}.settings-panel{margin-top:16px;padding:15px;background:#102b3b;border:1px solid #305063;border-radius:17px}.settings-panel label{display:block;color:var(--muted);font-size:11px;margin:0 0 8px;font-weight:700}.settings-panel select{width:100%;background:#193b4b;color:#fff;border:1px solid #497480;border-radius:12px;padding:10px 12px}.settings-row{display:flex;align-items:center;justify-content:space-between;gap:15px}.button{border:0;border-radius:15px;padding:13px 20px;background:linear-gradient(135deg,#ffe5a8,#dfaa55);color:#1b302e;font-size:14px;font-weight:900;box-shadow:0 8px 22px #e1b36126}.button.secondary{background:#1d3c4a;color:#e3f5fd;border:1px solid #3a6571;box-shadow:none}.button.ghost{background:transparent;color:#b7d2de;border:1px solid #466171;box-shadow:none}.button.full{width:100%}.button:active{transform:scale(.98)}.gameview{border:1px solid #357477;border-radius:22px;overflow:hidden;box-shadow:0 15px 50px #0008;background:#0b2634}.scorebar{display:flex;justify-content:space-between;align-items:center;padding:13px 12px;gap:10px;background:linear-gradient(110deg,#12354a,#133542)}.scorebar small{display:block;color:#8ab4c2;font-size:10px;letter-spacing:.1em;font-weight:800}.scorebar strong{font-size:27px;line-height:1.1;color:#fff}.scorebar span{font-size:11px;color:#b7d2df}.overs{margin-left:auto;text-align:right}.overs strong{font-size:22px}.matchmeta{padding:8px 13px;background:#0c2b3a;display:flex;justify-content:space-between;gap:8px;align-items:center;border-top:1px solid #225163}.matchmeta span{font-size:11px;color:#b7d8dc}.matchmeta b{color:#ffdd91}#scene{display:block;width:100%;height:auto;aspect-ratio:390/455;touch-action:manipulation;background:#124b54}.statusbar{display:flex;justify-content:space-between;gap:9px;align-items:center;padding:9px 13px;background:#092d35;border-top:1px solid #235865}.statusbar span{font-size:11px;color:#b4d2d4}.statusbar b{font-size:12px;color:var(--gold)}.ballhistory{display:flex;gap:4px;max-width:200px;overflow:hidden}.ballhistory i{font-style:normal;width:22px;height:22px;flex:0 0 22px;border-radius:50%;background:#1f5660;color:#d8fcf1;display:grid;place-items:center;font-size:10px;font-weight:800}.ballhistory i.boundary{background:#f1c77a;color:#173136}.ballhistory i.wicket{background:#ff6887;color:#241921}.controls{border:1px solid #335a64;background:linear-gradient(155deg,#112f3d,#0b222f);border-radius:20px;margin-top:11px;padding:15px}.ctrl-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}.ctrl-title strong{font-size:14px}.ctrl-title span{color:var(--muted);font-size:11px}.options{display:flex;gap:7px}.select-chip{flex:1;padding:11px 6px;text-align:center;color:#b9cfd8;background:#173b48;border:1px solid #365a64;border-radius:11px;font-size:12px;font-weight:800;transition:background .12s}.select-chip.selected{background:#e8c788;border-color:#f4dc9f;color:#193439}.shotbar{display:flex;gap:9px;margin-top:11px}.shotbar .select-chip{flex:1}.swings{display:grid;grid-template-columns:1fr 1.35fr;gap:10px;margin-top:13px}#swing{min-height:66px;font-size:18px;background:linear-gradient(140deg,#ffdf95,#eea74c);color:#1e302e;box-shadow:0 8px 30px #e4b36430}#nextBall{min-height:66px;background:#184450;color:#d4f5ed;border:1px solid #357277;box-shadow:none;font-size:13px}.timing-track{margin-top:14px;height:11px;position:relative;background:#123341;border:1px solid #3c6472;border-radius:100px;overflow:hidden}.timing-track:before{content:'';position:absolute;height:100%;left:73%;width:15%;background:linear-gradient(90deg,#48bc85,#bcffb0,#48bc85)}#timingCursor{height:100%;position:absolute;top:0;left:0;width:3%;border-radius:10px;background:#ffe4a0;box-shadow:0 0 12px #fdea93}.timing-labels{display:flex;justify-content:space-between;font-size:10px;color:#86a6b2;margin-top:6px}.note{font-size:11px;line-height:1.65;color:var(--muted);margin-top:14px;text-align:center}.overlay{position:fixed;inset:0;background:#051521d9;display:grid;place-items:center;padding:20px;z-index:30;backdrop-filter:blur(7px)}.dialog{width:min(100%,400px);background:linear-gradient(170deg,#1d4350,#0e2637);border:1px solid #56808a;border-radius:25px;padding:25px;text-align:center;box-shadow:0 40px 100px #0009}.dialog .trophy{font-size:55px;margin-bottom:12px}.dialog h2{font-size:28px;margin:0 0 7px;letter-spacing:-.05em}.dialog p{color:#a9ccd1;font-size:13px;line-height:1.7}.summaryscore{font-size:52px;color:#ffd891;font-weight:900;margin:14px}.dialog .button{margin-top:10px}.hidden{display:none!important}.footer{color:#627e8d;text-align:center;font-size:10px;letter-spacing:.08em;margin:28px 0 0}.topbuttons{display:flex;gap:7px}.flash{animation:pulse .6s ease}@keyframes pulse{0%{filter:brightness(1.5)}100%{filter:brightness(1)}}@media(max-width:355px){.shell{padding:0 8px 25px}.mode-grid{gap:8px}.mode{padding:12px 10px;min-height:147px}.scorebar strong{font-size:24px}.controls{padding:11px}.select-chip{font-size:11px}.hero-bg{height:223px}}@media(min-width:750px){.shell{padding-top:0}header{padding-top:28px}}
+</style></head><body><div id="app"><header><div class="brand"><div class="logo">🏏</div><div class="brand-text"><b>CRICKET SMASH <span style="color:var(--gold)">3D</span></b><small>STADIUM EDITION</small></div></div><div class="topbuttons"><button class="iconbtn" id="soundBtn" aria-label="Toggle sound" title="Sound">♫</button><button class="iconbtn" id="homeBtn" aria-label="Home" title="Home">⌂</button></div></header><main class="shell">
+<section id="homeScreen"><div class="hero"><div class="hero-bg"></div><div class="hero-content"><div class="eyebrow">🏆 Your stadium awaits</div><h1>OWN THE<br><em>CREase.</em></h1><p>Pick your shot. Watch the ball. Time the perfect swing.</p></div><div class="hero-bottom"><div><b>TAKE THE FIELD</b><small>Four ways to become a legend</small></div><span class="pill">● 100% OFFLINE</span></div></div><div class="section-title"><h2>Choose your match</h2><span>Swipe. Tap. Smash.</span></div><div class="mode-grid"><button class="mode" data-mode="quick"><span class="emoji">🏟️</span><b>Quick Match</b><p>12 balls. Highest score wins.</p><span class="mini">2 OVERS →</span></button><button class="mode" data-mode="super"><span class="emoji">⚡</span><b>Super Over</b><p>Six balls. Chase the target.</p><span class="mini">1 OVER →</span></button><button class="mode" data-mode="career"><span class="emoji">🏆</span><b>Career Tour</b><p>30 chapters. Bigger targets.</p><span class="mini" id="careerStatus">LEVEL 01 →</span></button><button class="mode" data-mode="daily"><span class="emoji">🌤️</span><b>Daily Challenge</b><p>Fresh match every day.</p><span class="mini">TODAY'S MATCH →</span></button><button class="mode" data-mode="nets" style="grid-column:1/-1;min-height:113px"><span class="emoji" style="margin-bottom:5px">🎯</span><b>Practice Nets</b><p style="min-height:0;margin-bottom:0">18-ball training. Focus on your timing and shot direction.</p></button></div><div class="statrow"><div class="stat"><b id="statBest">0</b><small>TOP SCORE</small></div><div class="stat"><b id="statSixes">0</b><small>CAREER SIXES</small></div><div class="stat"><b id="statWins">0</b><small>WINS</small></div></div><div class="settings-panel"><div class="settings-row"><div><label for="difficulty">BOWLING DIFFICULTY</label><select id="difficulty"><option value="0">Rookie — forgiving</option><option value="2" selected>Club — balanced</option><option value="4">Pro — fast + spin</option><option value="5">Legend — hardest</option></select></div><div style="text-align:right;max-width:130px;font-size:11px;color:var(--muted)">Career matches scale up automatically.</div></div></div><p class="note">No account. No connection. No ads or purchases in this build.</p></section>
+<section id="gameScreen" class="hidden"><div class="gameview"><div class="scorebar"><div><small id="matchName">QUICK MATCH</small><strong id="score">0 / 0</strong><span id="target">Personal best 0</span></div><div class="overs"><small>OVERS</small><strong id="overs">0.0</strong><span id="ballsRemaining">12 balls left</span></div></div><div class="matchmeta"><span id="bowlingType">BOWLER • WAITING</span><span id="currentLevel">STADIUM EDITION</span></div><canvas id="scene" width="900" height="1050" role="img" aria-label="Perspective 3D-style cricket stadium and playable ball scene. Tap to swing."></canvas><div class="statusbar"><span id="playStatus">Tap BOWL NEXT to start</span><div id="ballHistory" class="ballhistory" aria-label="Last six deliveries"></div></div></div><div class="controls"><div class="ctrl-title"><strong>Choose your shot</strong><span>Direction + height</span></div><div class="options" id="sideOptions"><button class="select-chip" data-side="leg">↙ LEG SIDE</button><button class="select-chip selected" data-side="straight">↑ STRAIGHT</button><button class="select-chip" data-side="off">↗ OFF SIDE</button></div><div class="shotbar" id="strokeOptions"><button class="select-chip selected" data-stroke="ground">▰ GROUND DRIVE</button><button class="select-chip" data-stroke="loft">✦ LOFTED HIT</button></div><div class="timing-track" role="progressbar" aria-label="Ball arrival timing" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="timingCursor"></div></div><div class="timing-labels"><span>RELEASE</span><span>● SWEET SPOT</span><span>BAT</span></div><div class="swings"><button id="nextBall" class="button">🎾 BOWL NEXT</button><button id="swing" class="button" disabled>🏏 SWING!</button></div></div><p class="note">Tap SWING as the ball reaches the batter. Spacebar also swings. Perfect timing scores more!</p></section>
+<div class="footer">CRICKET SMASH 3D © 2026 • BUILT FOR THE LOVE OF CRICKET</div></main></div>
+<div id="dialogOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Match result"><div class="dialog"><div class="trophy" id="dialogIcon">🏆</div><div class="eyebrow">STADIUM EDITION</div><h2 id="dialogTitle">Innings Complete</h2><div id="dialogScore" class="summaryscore">0/0</div><p id="dialogDescription"></p><button class="button full" id="dialogReplay">PLAY AGAIN</button><button class="button secondary full" id="dialogHome">BACK TO HOME</button></div></div>
+<script>/* Cricket Smash 3D — original offline arcade rules, deterministic tests available. */
+(function(root,factory){const api=factory();if(typeof module!=='undefined'&&module.exports)module.exports=api;root.CricketCore=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
+  const VERSION='1.0.0';
+  const TYPES=['Pace','Inswing','Outswing','Yorker','Bouncer','Off-spin','Leg-spin'];
+  function clamp(a,l,h){return Math.max(l,Math.min(h,a));}
+  function mulberry32(seed){let n=seed>>>0;return function(){n+=0x6D2B79F5;let t=n;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};}
+  function dailySeed(iso){let h=2166136261;for(const x of iso){h^=x.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0;}
+  function makeDelivery(random,difficulty,ballNum){
+    const pool=difficulty<2?TYPES.slice(0,3):difficulty<4?TYPES.slice(0,5):TYPES;
+    const kind=pool[Math.floor(random()*pool.length)];
+    const speed=kind.includes('spin')?0.85:kind==='Yorker'?1.11:kind==='Bouncer'?1.05:1;
+    const length=kind==='Yorker'?0.88:kind==='Bouncer'?0.66:0.76+random()*0.11;
+    const swing=kind==='Inswing'?-1:kind==='Outswing'?1:kind==='Off-spin'?-0.7:kind==='Leg-spin'?0.7:0;
+    const line=(random()-.5)*(difficulty<2?.20:.45);
+    return {kind,speed,length,swing,line,ideal:clamp(.77+(length-.75)*.36, .71,.89),flightMs:Math.round((2140-110*difficulty)/speed),id:ballNum};
+  }
+  function resolveShot({timing,delivery,side='straight',stroke='ground',difficulty=1,random=Math.random}){
+    const distance=Math.abs(timing-delivery.ideal);
+    const quality=clamp(1-distance/.33,0,1);
+    const accuracy=clamp(quality-(difficulty*.019)+(random()-.5)*.085,0,1);
+    const miss=quality<.19 || (quality<.34&&random()<(.34-quality)*.5);
+    if(miss){const wicket=random()<(delivery.kind==='Yorker'?.54:.27)+.035*difficulty;return {runs:0,wicket,quality,timingLabel:timing<delivery.ideal?'TOO EARLY':'TOO LATE',type:wicket?'BOWLED!':'DOT BALL',distance:0};}
+    const precise=distance<.065;
+    const label=precise?'PERFECT!':distance<.13?'GREAT!':distance<.22?'GOOD HIT':'EDGED';
+    const variation=random();
+    let runs=0;
+    if(accuracy>.82){runs=stroke==='loft'?(variation<.76?6:4):(variation<.76?4:2);}
+    else if(accuracy>.64){runs=stroke==='loft'?(variation<.55?6:variation<.87?4:2):(variation<.47?4:2);}
+    else if(accuracy>.43){runs=stroke==='loft'?(variation<.14?6:variation<.33?4:variation<.75?2:1):(variation<.23?4:variation<.7?2:1);}
+    else {runs=variation<.26?0:variation<.76?1:2;}
+    const loftRisk=stroke==='loft'?(1-accuracy)*.22:0;
+    const wicket=runs>0 && random()<loftRisk+(accuracy<.45?.045:0);
+    if(wicket)runs=0;
+    return {runs,wicket,quality,timingLabel:label,type:wicket?'CAUGHT!':runs===6?'SIX!':runs===4?'FOUR!':runs===0?'DOT BALL':`+${runs} RUN${runs>1?'S':''}`,distance:runs===6?88:runs===4?68:15+runs*8,side,stroke};
+  }
+  function careerLevel(n){let level=clamp(Math.floor(n)||1,1,30),difficulty=clamp(1+Math.floor((level-1)/7),1,5);return {level,difficulty,target:Math.round(16+(level-1)*1.05),balls:12,maxWickets:3};}
+  function configFor(mode,level=1,iso='2026-10-17'){
+    if(mode==='super')return {mode,difficulty:2,balls:6,maxWickets:2,target:20,seed:38481};
+    if(mode==='career')return {mode,...careerLevel(level),seed:19108+level*1223};
+    if(mode==='daily')return {mode,difficulty:3,balls:12,maxWickets:3,target:29,seed:dailySeed(iso)};
+    if(mode==='nets')return {mode,difficulty:1,balls:18,maxWickets:99,target:0,seed:99124};
+    return {mode:'quick',difficulty:2,balls:12,maxWickets:3,target:0,seed:77919};
+  }
+  function makeMatch(config){return {...config,score:0,wickets:0,delivered:0,fours:0,sixes:0,results:[],finished:false,won:false,ballsLeft:config.balls};}
+  function registerDelivery(match,result){
+    if(match.finished)throw new Error('Match already ended');
+    const next={...match,score:match.score+result.runs,wickets:match.wickets+(result.wicket?1:0),delivered:match.delivered+1,fours:match.fours+(result.runs===4?1:0),sixes:match.sixes+(result.runs===6?1:0),results:[...match.results,result]};
+    next.ballsLeft=Math.max(0,next.balls-next.delivered);
+    next.won=next.target>0&&next.score>=next.target;
+    next.finished=next.won||next.wickets>=next.maxWickets||next.delivered>=next.balls;
+    if(next.target===0)next.won=next.finished;
+    return next;
+  }
+  function overs(balls){return Math.floor(balls/6)+'.'+balls%6;}
+  return {VERSION,TYPES,clamp,mulberry32,dailySeed,makeDelivery,resolveShot,careerLevel,configFor,makeMatch,registerDelivery,overs};
+});
+</script><script>/* Cricket Smash 3D interactive stadium game — all content runs offline. */
+(function(){'use strict';
+const C=globalThis.CricketCore, $=id=>document.getElementById(id);
+const el={home:$('homeScreen'),game:$('gameScreen'),scene:$('scene'),score:$('score'),target:$('target'),overs:$('overs'),remaining:$('ballsRemaining'),match:$('matchName'),level:$('currentLevel'),bowl:$('bowlingType'),status:$('playStatus'),history:$('ballHistory'),cursor:$('timingCursor'),next:$('nextBall'),swing:$('swing'),dialog:$('dialogOverlay')};
+const canvas=el.scene,ctx=canvas.getContext('2d',{alpha:false});let storage={best:0,sixes:0,wins:0,career:1,sound:true};
+try{storage={...storage,...JSON.parse(localStorage.getItem('cricket-smash-v1')||'{}')}}catch(e){}
+function save(){try{localStorage.setItem('cricket-smash-v1',JSON.stringify(storage))}catch(e){}}
+let match=null,delivery=null,rng=C.mulberry32(456),phase='home',started=0,timeNow=0,side='straight',stroke='ground',lastOutcome=null,swingAnim=0,toast='',toastStart=0,frames=0,soundCtx=null,didFinish=false,activeMode='quick',chosenDifficulty=2,cameraNudge=0;
+function sfx(frequency=450,duration=.08,triangle='sine'){
+ if(!storage.sound)return;
+ try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;soundCtx=soundCtx||new AC();if(soundCtx.state==='suspended')soundCtx.resume();const o=soundCtx.createOscillator(),g=soundCtx.createGain();o.type=triangle;o.frequency.setValueAtTime(frequency,soundCtx.currentTime);o.frequency.exponentialRampToValueAtTime(Math.max(80,frequency*.61),soundCtx.currentTime+duration);g.gain.setValueAtTime(.09,soundCtx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,soundCtx.currentTime+duration);o.connect(g);g.connect(soundCtx.destination);o.start();o.stop(soundCtx.currentTime+duration)}catch(e){}
+}
+function haptic(t=16){try{navigator.vibrate?.(t)}catch(e){}}
+function rrect(x,y,w,h,r=12){ctx.beginPath();ctx.roundRect(x,y,w,h,r);}
+function fillRect(x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(x,y,w,h)}
+function shape(points,fill,stroke=null,lineWidth=1){ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);for(let i=1;i<points.length;i++)ctx.lineTo(points[i][0],points[i][1]);ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.lineWidth=lineWidth;ctx.strokeStyle=stroke;ctx.stroke()}}
+function line(x,y,x2,y2,color,width=2){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x2,y2);ctx.stroke()}
+function ballCircle(x,y,r,c1,c2,shadow=0){ctx.save();if(shadow){ctx.shadowColor='#0008';ctx.shadowBlur=shadow;ctx.shadowOffsetY=shadow*.36}const grad=ctx.createRadialGradient(x-r*.35,y-r*.42,r*.09,x,y,r);grad.addColorStop(0,c1);grad.addColorStop(1,c2);ctx.fillStyle=grad;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.restore()}
+function text(s,x,y,font='700 25px system-ui',color='white',align='center'){ctx.fillStyle=color;ctx.textAlign=align;ctx.font=font;ctx.fillText(s,x,y)}
+const crowd=[];{let rr=C.mulberry32(10210);for(let i=0;i<1350;i++){crowd.push([rr(),rr(),rr(),rr()])}}
+function skyAndStadium(t){
+ const sky=ctx.createLinearGradient(0,0,0,615);sky.addColorStop(0,'#09223c');sky.addColorStop(.5,'#236b85');sky.addColorStop(.94,'#7ca2a0');sky.addColorStop(1,'#a5b9aa');fillRect(0,0,900,630,sky);
+ // Light streaks and floodlights.
+ const lg=ctx.createRadialGradient(150,123,0,150,123,320);lg.addColorStop(0,'#adfbff3c');lg.addColorStop(1,'#7de6ff00');fillRect(0,0,450,480,lg);
+ const rg=ctx.createRadialGradient(760,142,0,760,142,310);rg.addColorStop(0,'#e8e6bb3d');rg.addColorStop(1,'#e8e6bb00');fillRect(500,0,400,450,rg);
+ // Entire stadium has perspective tiered arena.
+ shape([[0,201],[180,114],[450,94],[720,114],[900,201],[900,500],[0,500]],'#1b394d');
+ shape([[0,238],[200,160],[450,141],[702,160],[900,238],[900,299],[700,217],[450,198],[200,217],[0,299]],'#1d5364');
+ shape([[0,295],[200,222],[450,201],[700,222],[900,295],[900,366],[690,302],[450,277],[210,302],[0,366]],'#153d50');
+ shape([[0,361],[208,302],[450,278],[692,302],[900,361],[900,459],[660,396],[450,370],[240,396],[0,459]],'#254f53');
+ // Crowds in sloping stands; pseudo depth tier composition.
+ for(const c of crowd){const section=Math.floor(c[0]*3);const h=[246,320,393][section],depth=[50,58,65][section];const x=c[1]*900,y=h+c[2]*depth-(1-Math.abs(x-450)/450)*26;const palette=['#89c2bc','#f3d991','#e7f4df','#3f7d8c','#b0a8aa','#e09a79'];ctx.globalAlpha=.40+(c[3]*.45);fillRect(x,y,1+2.5*c[3],1+2.8*c[3],palette[Math.floor(c[3]*palette.length)%palette.length])}ctx.globalAlpha=1;
+ // Stadium fascia and animated advertising ribbon.
+ shape([[0,446],[220,396],[450,388],[680,396],[900,446],[900,486],[660,431],[450,419],[240,431],[0,486]],'#061f33');
+ line(0,449,220,399,'#42dbd0',4);line(220,399,450,390,'#42dbd0',4);line(450,390,680,399,'#42dbd0',4);line(680,399,900,449,'#42dbd0',4);
+ text('C R I C K E T   S M A S H',450,414,'900 19px system-ui','#a0fbe4');
+ // Stadium floodlight pylons.
+ [[45,210],[855,210]].forEach(([x,y])=>{line(x,y-70,x+12,y+185,'#193948',11);ctx.save();ctx.shadowColor='#c9faff';ctx.shadowBlur=30;fillRect(x-27,y-87,76,20,'#e9f9e0');ctx.restore();for(let j=0;j<4;j++)fillRect(x-21+j*17,y-84,10,13,'#fff')});
+ // Outfield / 3D ground with stadium rim perspective.
+ const grass=ctx.createLinearGradient(0,445,0,1050);grass.addColorStop(0,'#327d4c');grass.addColorStop(.5,'#256c45');grass.addColorStop(1,'#0c503d');shape([[0,480],[200,430],[450,420],[700,430],[900,480],[900,1050],[0,1050]],grass);
+ ctx.save();ctx.globalAlpha=.15;for(let i=0;i<13;i++){const far=450+(i-6)*48,near=450+(i-6)*148;shape([[far,440],[far+22,440],[near+64,1050],[near,1050]],i%2?'#b5f5a0':'#092e21')}ctx.restore();
+ // Outfield arc.
+ ctx.strokeStyle='#f2e5a6aa';ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(450,620,546,345,0,0,Math.PI*2);ctx.stroke();
+ // Tiny fielders in 3D distance.
+ [[90,555,.8],[796,545,.86],[182,686,.85],[734,705,.82],[334,475,.55],[581,477,.55]].forEach(([x,y,scale],i)=>drawFielder(x,y,scale,i));
+}
+function drawFielder(x,y,s,n){ctx.save();ctx.translate(x,y);ctx.scale(s,s);ctx.fillStyle='#0005';ctx.beginPath();ctx.ellipse(0,16,14,4,0,0,7);ctx.fill();ballCircle(0,-18,6,'#f2bc89','#a6634e');shape([[-8,-11],[8,-11],[12,9],[-12,9]],n%2?'#f7d267':'#e9bf65');shape([[-10,8],[-2,8],[-7,25],[-14,25]],'#18394f');shape([[3,8],[10,8],[14,25],[7,25]],'#18394f');ctx.restore()}
+function pitchAndWickets(t){
+ // Earth surrounding raised 3D pitch.
+ shape([[405,461],[495,461],[661,1030],[240,1030]],'#68462d');
+ shape([[411,448],[489,448],[643,1020],[256,1020]],'#d3ad79','#f5c99a',3);
+ ctx.globalAlpha=.19;for(let i=0;i<15;i++){const y=473+i*39;line(420-(y-448)*.27,y,480+(y-448)*.27,y,'#886a4d',1)}ctx.globalAlpha=1;
+ const glow=ctx.createLinearGradient(0,449,0,1000);glow.addColorStop(0,'#f7d8a333');glow.addColorStop(1,'#ffeec466');shape([[420,468],[480,468],[630,990],[270,990]],glow);
+ // crease marks.
+ line(374,860,526,860,'#f8f4e2',5);line(388,458,511,458,'#ffffdf',3);line(383,884,518,884,'#fff4d5',3);
+ line(405,790,410,896,'#f7efe0',3);line(495,790,490,896,'#f7efe0',3);
+ // bowling end wickets, near end wickets.
+ drawWickets(450,483,.6);drawWickets(448,871,1.5);
+}
+function drawWickets(x,y,scale){ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);ctx.lineWidth=5;ctx.strokeStyle='#fff5c9';ctx.lineCap='round';for(const shift of [-13,0,13])line(shift,0,shift,-45,'#f9ebcd',4);line(-17,-44,2,-46,'#fff7d8',4);line(1,-46,17,-44,'#fff7d8',4);ctx.restore()}
+function batsman(t){
+ const swing=Math.max(0,1-(timeNow-swingAnim)/550),angle=swing>0?Math.sin(swing*Math.PI)*.65:0;
+ ctx.save();ctx.translate(480,855);ctx.scale(1.12,1.1);
+ ctx.fillStyle='#092b2d78';ctx.beginPath();ctx.ellipse(12,25,45,17,-.3,0,7);ctx.fill();
+ // Hind legs and pads.
+ shape([[-18,-68],[-3,-68],[-2,7],[-17,17],[-29,9]],'#f4eee2','#7b887f',1);
+ shape([[5,-67],[20,-67],[34,4],[19,12],[9,3]],'#f3ebda','#87968d',1);
+ line(-23,-3,-20,11,'#bbb4a7',5);line(18,-2,22,10,'#bbb4a7',5);
+ // Torso + sleeves 3D.
+ shape([[-25,-136],[22,-142],[36,-91],[18,-63],[-24,-68],[-37,-108]],'#2c8f76','#b3e6d5',2);
+ shape([[-25,-136],[-39,-113],[-25,-82],[-17,-87],[-25,-111]],'#c4e7c9');
+ shape([[25,-132],[44,-117],[22,-95],[16,-103]],'#acd6c1');
+ // helmet and skin.
+ ballCircle(0,-162,25,'#236d66','#143846',2);
+ shape([[0,-148],[22,-151],[20,-138],[8,-132]],'#ca9b72');
+ line(9,-157,16,-140,'#dee2e4',3);
+ // Bat angled, dynamically swings around the hands.
+ ctx.save();ctx.translate(21,-99);ctx.rotate(-.34-angle*1.8);shape([[-7,-4],[5,-4],[16,-83],[1,-89]],'#d1a36b','#f8ddb0',2);shape([[-1,-79],[8,-79],[11,-122],[5,-128]],'#3d2830');ctx.restore();
+ ctx.restore();
+}
+function bowler(t){const p=phase==='delivery'?C.clamp(t/.52,0,1):0;const yy=477+p*5;
+ ctx.save();ctx.translate(435,yy);ctx.scale(.57,.58);ctx.fillStyle='#0006';ctx.beginPath();ctx.ellipse(0,6,18,8,0,0,7);ctx.fill();
+ shape([[-11,-12],[-2,-12],[-16,29],[-23,29]],'#1b4b63');shape([[3,-12],[14,-12],[23,30],[13,30]],'#1b4b63');shape([[-17,-62],[17,-62],[11,-7],[-12,-7]],'#edc971');ballCircle(0,-82,17,'#dba37a','#9e664d');line(13,-54,26,-93-p*7,'#dba37a',8);ctx.restore();
+}
+function activeBall(t){if(phase!=='delivery'||!delivery)return;
+ const progress=C.clamp(t,0,1),advance=Math.pow(progress,1.58),by=487+350*advance;
+ const wobble=Math.sin(progress*5)*delivery.swing*18*advance +delivery.line*45*advance;
+ const bx=450+wobble+delivery.swing*16*advance;
+ const bounced=progress>delivery.length;const arc=bounced?Math.abs(Math.sin((progress-delivery.length)*12))*11:Math.sin(progress*Math.PI)*17;
+ const br=5+12*advance;
+ ctx.save();ctx.globalAlpha=.25;ctx.fillStyle='#091d21';ctx.beginPath();ctx.ellipse(bx,by+14,br*1.5,br*.46,0,0,7);ctx.fill();ctx.restore();
+ ballCircle(bx,by-arc,br,'#ffbdb2','#a8132b',9);line(bx-br*.5,by-arc-br*.15,bx+br*.4,by-arc+br*.3,'#ffedcc',Math.max(1,br*.12));
+ ctx.strokeStyle='#ffe4c559';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(bx,by-arc);ctx.lineTo(bx-(delivery.swing*10),by-arc-26*advance);ctx.stroke();
+}
+function renderScene(now){
+ const current=phase==='delivery'&&delivery?C.clamp((now-started)/delivery.flightMs,0,1):phase==='result'?1:0;
+ ctx.save();ctx.clearRect(0,0,900,1050);skyAndStadium(now);pitchAndWickets(current);bowler(current);batsman(current);activeBall(current);
+ // overlay score headline in stadium area.
+ ctx.fillStyle='#031d2eb3';rrect(300,35,300,71,18);ctx.fill();ctx.strokeStyle='#72dfc45a';ctx.lineWidth=2;ctx.stroke();text('SMASH YOUR LIMITS',450,65,'900 16px system-ui','#98efd2');text(phase==='delivery'?'BOWL IN FLIGHT':phase==='ready'?'BATTER READY':phase==='result'?lastOutcome?.type||'SHOT PLAYED':'STADIUM EDITION',450,91,'900 19px system-ui',phase==='result'?'#ffe39b':'#fff');
+ if(phase==='delivery'){const progress=C.clamp((now-started)/delivery.flightMs,0,1);const p=progress*100;el.cursor.style.left=p+'%';el.cursor.parentElement.setAttribute('aria-valuenow',String(Math.round(p)));if(progress>=1){doSwing(true)}}
+ else if(phase==='ready'||phase==='result'){el.cursor.style.left=phase==='ready'?'0%':'100%'}
+ if(phase==='result'&&lastOutcome&&now-toastStart<1500){const tt=(now-toastStart)/1500;ctx.save();ctx.globalAlpha=Math.min(1,tt*8,(1-tt)*3);ctx.translate(450,360);ctx.rotate(-.04);ctx.shadowBlur=20;ctx.shadowColor='#002a19';text(lastOutcome.type,0,-12-(1-tt)*50,'900 92px system-ui',lastOutcome.wicket?'#ff8e95':'#ffe6a7');text(lastOutcome.timingLabel,0,50-(1-tt)*50,'900 30px system-ui','#f9ffec');ctx.restore()}
+ ctx.restore();timeNow=now;frames++;requestAnimationFrame(renderScene);
+}
+function updateHome(){el.home.classList.remove('hidden');el.game.classList.add('hidden');$('statBest').textContent=storage.best;$('statSixes').textContent=storage.sixes;$('statWins').textContent=storage.wins;$('careerStatus').textContent=`LEVEL ${String(storage.career).padStart(2,'0')} →`;phase='home';}
+function fmtMode(mode){return({quick:'QUICK MATCH',super:'SUPER OVER',career:'CAREER CHALLENGE',daily:'DAILY CHALLENGE',nets:'PRACTICE NETS'})[mode]||mode.toUpperCase()}
+function start(mode){activeMode=mode;chosenDifficulty=Number($('difficulty').value)||0;const iso=new Date().toLocaleDateString('en-CA');let config=C.configFor(mode,storage.career,iso);if(mode==='quick'||mode==='nets')config.difficulty=chosenDifficulty;
+ match=C.makeMatch(config);rng=C.mulberry32(config.seed);delivery=null;lastOutcome=null;didFinish=false;side='straight';stroke='ground';phase='ready';el.home.classList.add('hidden');el.game.classList.remove('hidden');el.dialog.classList.add('hidden');document.querySelectorAll('#sideOptions button').forEach(x=>x.classList.toggle('selected',x.dataset.side===side));document.querySelectorAll('#strokeOptions button').forEach(x=>x.classList.toggle('selected',x.dataset.stroke===stroke));el.match.textContent=fmtMode(mode);el.level.textContent=mode==='career'?`STAGE ${match.level} / 30`:`${['ROOKIE','CLUB','PRO','CHAMPION','LEGEND','ELITE'][match.difficulty]||'CLUB'} BOWLING`;el.next.disabled=false;el.swing.disabled=true;el.next.textContent='🎾 BOWL NEXT';updateHUD('Tap BOWL NEXT to begin');window.scrollTo({top:0,behavior:'smooth'});}
+function updateHUD(message){if(!match)return;el.score.textContent=`${match.score} / ${match.wickets}`;el.overs.textContent=C.overs(match.delivered);el.remaining.textContent=`${match.ballsLeft} ball${match.ballsLeft===1?'':'s'} left`;el.target.textContent=match.target>0?`Target ${match.target} • Need ${Math.max(0,match.target-match.score)}`:`Best ${storage.best} • ${match.fours} fours / ${match.sixes} sixes`;el.status.textContent=message||'Ready';el.bowl.textContent=delivery?`BOWLER • ${delivery.kind.toUpperCase()}`:'BOWLER • READY';el.history.replaceChildren();for(const r of match.results.slice(-6)){const i=document.createElement('i');i.textContent=r.wicket?'W':r.runs===0?'·':r.runs;i.className=r.wicket?'wicket':r.runs>=4?'boundary':'';el.history.appendChild(i)}}
+function bowlNext(){if(phase!=='ready'||!match||match.finished)return;delivery=C.makeDelivery(rng,match.difficulty,match.delivered);phase='delivery';started=performance.now();timeNow=started;el.next.disabled=true;el.swing.disabled=false;updateHUD(`${delivery.kind} • TIME YOUR SWING`);sfx(320,.11);}
+function doSwing(autoMiss=false){if(phase!=='delivery'||!delivery||!match)return;
+ const timing=autoMiss?1.13:C.clamp((performance.now()-started)/delivery.flightMs,0,1.2);
+ const result=C.resolveShot({timing,delivery,side,stroke,difficulty:match.difficulty,random:rng});
+ phase='result';swingAnim=performance.now();timeNow=swingAnim;toastStart=swingAnim;lastOutcome=result;match=C.registerDelivery(match,result);
+ if(result.wicket){sfx(140,.28,'sawtooth');haptic([70,35,70])}else if(result.runs>=4){sfx(760,.28,'triangle');haptic(45)}else{sfx(410,.08);haptic(17)}
+ el.swing.disabled=true;el.next.disabled=match.finished;el.next.textContent='🎾 NEXT BALL';updateHUD(`${result.timingLabel} • ${result.type}`);
+ if(match.finished){finishMatch()}else{phase='result';setTimeout(()=>{if(phase==='result'&&match&&!match.finished){phase='ready';el.next.disabled=false;updateHUD('Next delivery ready • choose a shot')}},960)}
+}
+function finishMatch(){if(didFinish)return;didFinish=true;
+ storage.best=Math.max(storage.best,match.score);storage.sixes+=match.sixes;storage.wins+=(match.won?1:0);
+ if(activeMode==='career'&&match.won&&storage.career===match.level)storage.career=Math.min(30,storage.career+1);
+ save();setTimeout(()=>{if(!didFinish||!match||!match.finished)return;
+ $('dialogIcon').textContent=match.won?'🏆':'🏏';$('dialogTitle').textContent=match.target?(match.won?'TARGET SMASHED!':'INNINGS OVER'):'INNINGS COMPLETE';$('dialogScore').textContent=`${match.score}/${match.wickets}`;
+ $('dialogDescription').textContent=`${match.delivered} balls • ${match.fours} fours • ${match.sixes} sixes. ${match.target?(match.won?'You reached your target!':`Target was ${match.target}. Try a different timing or shot.`):`Best score: ${storage.best}.`} ${activeMode==='career'&&match.won?'The next stage is unlocked.':''}`;
+ el.dialog.classList.remove('hidden');sfx(match.won?760:220,.30,'triangle');
+ },1100)}
+function goHome(){if(phase==='delivery'){phase='ready'}didFinish=false;match=null;el.dialog.classList.add('hidden');updateHome()}
+function bind(){document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>start(b.dataset.mode)));
+ $('homeBtn').addEventListener('click',goHome);
+ $('soundBtn').addEventListener('click',()=>{storage.sound=!storage.sound;$('soundBtn').textContent=storage.sound?'♫':'♪̸';save()});$('soundBtn').textContent=storage.sound?'♫':'♪̸';
+ document.querySelectorAll('#sideOptions button').forEach(b=>b.addEventListener('click',()=>{side=b.dataset.side;document.querySelectorAll('#sideOptions button').forEach(x=>x.classList.toggle('selected',x===b));sfx(390,.045)}));
+ document.querySelectorAll('#strokeOptions button').forEach(b=>b.addEventListener('click',()=>{stroke=b.dataset.stroke;document.querySelectorAll('#strokeOptions button').forEach(x=>x.classList.toggle('selected',x===b));sfx(440,.045)}));
+ el.next.addEventListener('click',bowlNext);el.swing.addEventListener('click',()=>doSwing());canvas.addEventListener('pointerdown',()=>{if(phase==='delivery')doSwing()});
+ $('dialogReplay').addEventListener('click',()=>{const mode=activeMode;start(mode)});$('dialogHome').addEventListener('click',goHome);
+ window.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();if(phase==='ready')bowlNext();else if(phase==='delivery')doSwing()}else if(e.key==='ArrowLeft')document.querySelector('[data-side="leg"]').click();else if(e.key==='ArrowRight')document.querySelector('[data-side="off"]').click();else if(e.key==='ArrowUp')document.querySelector('[data-side="straight"]').click();else if(e.key.toLowerCase()==='l')document.querySelector('[data-stroke="loft"]').click()});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&phase==='delivery') {phase='ready';el.next.disabled=false;el.swing.disabled=true;el.next.textContent='🎾 RESTART BALL';updateHUD('Paused while away • tap to bowl again')}});
+}
+bind();updateHome();requestAnimationFrame(renderScene);
+window.CricketSmashTest={getState:()=>({phase,match,delivery,storage,side,stroke}),start,bowlNext,doSwing,home:goHome,core:C};
+})();
+</script></body></html>
