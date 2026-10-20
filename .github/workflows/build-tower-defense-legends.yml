@@ -1,0 +1,54 @@
+name: Build Tower Defense Legends (APK and AAB)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'tower-defense-legends/**'
+      - '.github/workflows/build-tower-defense-legends.yml'
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: tower-defense-legends/android-studio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install Android SDK 36
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -d "$ANDROID_HOME/platforms/android-36" ]; then
+            SDKMGR="$(find "$ANDROID_HOME/cmdline-tools" -path '*/bin/sdkmanager' -type f | sort -V | tail -1)"
+            "$SDKMGR" --install 'platforms;android-36' 'build-tools;36.0.0'
+          fi
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Check offline game sources
+        run: |
+          test -s app/src/main/assets/index.html
+          test -s app/src/main/java/com/brightforge/towerdefenselegends/MainActivity.java
+      - name: Build APK and unsigned AAB
+        run: gradle --no-daemon :app:assembleDebug :app:bundleRelease
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Tower-Defense-Legends-Debug-APK
+          path: tower-defense-legends/android-studio/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+          if-no-files-found: error
+      - name: Upload unsigned AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: Tower-Defense-Legends-Unsigned-Release-AAB
+          path: tower-defense-legends/android-studio/app/build/outputs/bundle/release/app-release.aab
+          retention-days: 30
+          if-no-files-found: error
