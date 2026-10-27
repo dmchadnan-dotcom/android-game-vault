@@ -1,0 +1,12 @@
+plugins { id 'com.android.application' }
+android {
+ namespace 'com.brightforge.merge2048nova'
+ compileSdk 36
+ defaultConfig { applicationId 'com.brightforge.merge2048nova'
+ minSdk 26
+ targetSdk 36
+ versionCode 1
+ versionName '0.9.0' }
+ buildTypes { release { minifyEnabled false } }
+ compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
